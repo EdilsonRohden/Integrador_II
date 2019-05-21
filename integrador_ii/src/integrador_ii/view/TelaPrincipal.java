@@ -8,8 +8,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import jdk.nashorn.internal.ir.CaseNode;
-
 import javax.swing.JMenuBar;
 import javax.swing.JToolBar;
 import javax.swing.JMenuItem;
