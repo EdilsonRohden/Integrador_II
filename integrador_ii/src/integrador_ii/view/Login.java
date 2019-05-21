@@ -46,6 +46,13 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnLogin = new JButton("login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaPrincipal telaPrincipal = new TelaPrincipal();
+				telaPrincipal.setVisible(true);
+				dispose();
+			}
+		});
 		btnLogin.setBounds(23, 178, 114, 25);
 		contentPane.add(btnLogin);
 		

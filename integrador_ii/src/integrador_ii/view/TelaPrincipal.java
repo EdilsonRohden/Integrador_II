@@ -140,6 +140,24 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuBar.add(mnLogoff);
+		
+		JMenuItem mntmLogoff = new JMenuItem("logoff");
+		mntmLogoff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login login = new Login();
+				login.setVisible(true);
+				dispose();
+			}
+		});
+		mnLogoff.add(mntmLogoff);
+		
+		JMenuItem mntmSair = new JMenuItem("Sair");
+		mntmSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		mnLogoff.add(mntmSair);
 		contentPane = new JDesktopPane();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
