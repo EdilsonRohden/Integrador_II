@@ -17,17 +17,17 @@ public class ContaDao extends Dao{
 		try {
 			
 			Statement stmt = connection.createStatement();
-			String sql = "SELECT * FROM conta JOIN primeiro_nivel ON conta.idprimeironivel = primeiro_nivel.id";
+			String sql = "SELECT * FROM conta JOIN primeiro_nivel ON conta.id_primeiro_nivel = primeiro_nivel.id";
 			
 			ResultSet resultSet = stmt.executeQuery(sql);
 			if(resultSet != null) {
 				while(resultSet.next()) {
 					contas.add(new Conta(
-							resultSet.getInt("idconta"),
-							resultSet.getInt("id"),
-							resultSet.getInt("idsegundonivel"),
-							resultSet.getString("descricao"),
-							resultSet.getString("descricaosnivel")
+							resultSet.getInt("conta.id_conta"),
+							resultSet.getInt("primeiro_nivel.id"),
+							resultSet.getInt("conta.id_segundo_nivel"),
+							resultSet.getString("primeiro_nivel.descricao"),
+							resultSet.getString("conta.descricao")
 							));
 				}
 				
@@ -52,16 +52,16 @@ public class ContaDao extends Dao{
 		try {
 			
 			Statement stmt = connection.createStatement();
-			String sql = "SELECT * FROM conta JOIN primeiro_nivel ON conta.idprimeironivel = primeironivel.id WHERE idconta = " + conta.getId();
+			String sql = "SELECT * FROM conta JOIN primeiro_nivel ON conta.id_primeiro_nivel = primeiro_nivel.id WHERE id_conta = " + conta.getId();
 			
 			ResultSet result = stmt.executeQuery(sql);
 			
 			if(result != null) {
-				resultado.setId(result.getInt("idconta"));
-				resultado.setIdP(result.getInt("idprimeironivel"));
-				resultado.setIdS(result.getInt("idsegundonivel"));
-				resultado.setDescricaoP(result.getString("descricao"));
-				resultado.setDescricaoS(result.getString("descricaosnivel"));
+				resultado.setId(result.getInt("conta.id_conta"));
+				resultado.setIdP(result.getInt("primeiro_nivel.id"));
+				resultado.setIdS(result.getInt("conta.id_segundo_nivel"));
+				resultado.setDescricaoP(result.getString("primeiro_nivel.descricao"));
+				resultado.setDescricaoS(result.getString("conta.descricao"));
 			}
 			
 		} catch (SQLException e) {
@@ -87,7 +87,7 @@ public class ContaDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "INSERT INTO conta (idconta, idprimeironivel, idsegundonivel, descricaosegundonivel) VALUES ( null, "+
+			String sql = "INSERT INTO conta (id_conta, id_primeiro_nivel, id_segundo_nivel, descricao) VALUES ( null, "+
 					conta.getIdP()+", " + conta.getIdS() + ", " + conta.getDescricaoS() + ");";
 			
 			stmt.execute(sql);

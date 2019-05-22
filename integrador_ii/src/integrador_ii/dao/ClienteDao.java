@@ -17,12 +17,12 @@ public class ClienteDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "SELECT * FROM cliente WHERE idpessoa = " + cliente.getId();
+			String sql = "SELECT * FROM cliente WHERE id_pessoa = " + cliente.getId();
 			
 			ResultSet result = stmt.executeQuery(sql);
 			
 			if(result != null) {
-				cliente.setId(result.getInt("idpessoa"));
+				cliente.setId(result.getInt("id_pessoa"));
 				cliente.setBairro(result.getString("bairro"));
 				cliente.setCep(result.getString("cep"));
 				cliente.setFone(result.getString("fone"));
@@ -54,7 +54,7 @@ public class ClienteDao extends Dao{
 					", cep = " + cliente.getCep() +
 					", fone = " + cliente.getFone() +
 					", email = " + cliente.getEmail() + 
-					" WHERE idpessoa = " + cliente.getId() + ";";
+					" WHERE id_pessoa = " + cliente.getId() + ";";
 			
 			stmt.execute(sql);
 			
@@ -73,7 +73,7 @@ public class ClienteDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "INSERT INTO cliente (idpessoa, bairro, cep, fone, email) VALUES (" + 
+			String sql = "INSERT INTO cliente (id_pessoa, bairro, cep, fone, email) VALUES (" + 
 					cliente.getId() + ", " +
 					cliente.getBairro() + ", " +
 					cliente.getCep() + ", " +
@@ -98,7 +98,7 @@ public class ClienteDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "SELECT * FROM clientes JOIN pessoa ON pessoa.idpesso = cliente.idpessoa ";
+			String sql = "SELECT * FROM clientes JOIN pessoa ON pessoa.id_pessoa = cliente.id_pessoa ";
 			
 			ResultSet resultSet = stmt.executeQuery(sql);
 			
@@ -106,7 +106,7 @@ public class ClienteDao extends Dao{
 				while(resultSet.next()) {
 					Cliente cliente = new Cliente();
 					cliente.setNome(resultSet.getString("nome"));
-					cliente.setId(resultSet.getInt("idpessoa"));
+					cliente.setId(resultSet.getInt("id_pessoa"));
 					cliente.setBairro(resultSet.getString("bairro"));
 					cliente.setCep(resultSet.getString("cep"));
 					cliente.setFone(resultSet.getString("fone"));

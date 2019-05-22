@@ -16,7 +16,7 @@ public class CidadeDao extends Dao{
 		try {
 			Statement stmt = connection.createStatement();
 			
-			String sql = "INSERT INTO cidade (estado, cdibge, nome) VALUES ("+
+			String sql = "INSERT INTO cidade (uf, id_ibge, nome) VALUES ("+
 			cidade.getEstado().getSigla() + ", " +
 					cidade.getCodigoIbge() + ", " +
 					cidade.getNome() + ");";
@@ -45,13 +45,13 @@ public class CidadeDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "SELECT * FROM cidade WHERE cdibge = " + cidade.getCodigoIbge();
+			String sql = "SELECT * FROM cidade WHERE id_ibge = " + cidade.getCodigoIbge();
 			ResultSet resultSet = stmt.executeQuery(sql);
 			
 			while (resultSet.next()) {
-				result = new Cidade(resultSet.getInt("cdibge"),
+				result = new Cidade(resultSet.getInt("id_ibge"),
 						resultSet.getString("nome"),
-						estadoDao.getEstadoBySigla(new Estado(resultSet.getString("estado")))
+						estadoDao.getEstadoBySigla(new Estado(resultSet.getString("uf")))
 						);
 			}
 			
@@ -70,10 +70,10 @@ public class CidadeDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "UPDATE cidade SET estado = " + cidade.getEstado().getSigla() +
-					", cdibge = " + cidade.getCodigoIbge() +
+			String sql = "UPDATE cidade SET uf = " + cidade.getEstado().getSigla() +
+					", id_ibge = " + cidade.getCodigoIbge() +
 					", nome = " + cidade.getNome() +
-					" WHERE cdibge = " + cidade.getCodigoIbge() + ";";
+					" WHERE id_ibge = " + cidade.getCodigoIbge() + ";";
 			
 			stmt.execute(sql);
 			

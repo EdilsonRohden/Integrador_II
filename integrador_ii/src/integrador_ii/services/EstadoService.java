@@ -15,8 +15,10 @@ public class EstadoService {
 		Estado estado = new Estado(sigla, nome);
 		if (estadoDao.getEstadoBySigla(estado) != null) {
 			estadoDao.update(estado);
+			System.out.println("UPDATE");
 		}else {
 			estadoDao.salvar(estado);			
+			System.out.println("INSERT");
 		}
 		
 		return true;

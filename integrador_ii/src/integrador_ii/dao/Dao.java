@@ -11,7 +11,7 @@ public abstract class Dao {
 	protected void conectar() {
 		
 		try {
-			this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/programacao", "postgres", "postgres");
+			this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/financeiro", "postgres", "101105");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

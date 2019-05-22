@@ -16,7 +16,7 @@ public class EstadoDao extends Dao{
 		try {
 			Statement stmt = connection.createStatement();
 			
-			String sql = "INSERT INTO estado (sigla, nome) VALUES (" +
+			String sql = "INSERT INTO estado (uf, nome) VALUES (" +
 			estado.getSigla() + "," +
 			estado.getNome() + ");";
 			
@@ -37,13 +37,17 @@ public class EstadoDao extends Dao{
 		try {
 			Statement stmt = connection.createStatement();
 			
-			String sql = "SELECT * FROM estado WHERE sigla = " + param.getSigla() + ";";
+			 String sql = "SELECT * FROM estado WHERE uf = '" + param.getSigla() + "';";
 			
+			 			 
 			ResultSet result = stmt.executeQuery(sql);
 			
 			if( result != null) {
-				estado.setNome(result.getString("nome"));
-				estado.setSigla(result.getString("sigla"));
+				while (result.next()) {
+					estado.setNome(result.getString("nome"));
+					estado.setSigla(result.getString("uf"));
+				}
+				
 			}
 			
 		} catch (SQLException e) {
@@ -69,7 +73,7 @@ public class EstadoDao extends Dao{
 			if( resultSet != null) {
 				
 				while (resultSet.next()) {
-					Estado estado = new Estado(resultSet.getString("sigla"), resultSet.getString("nome"));
+					Estado estado = new Estado(resultSet.getString("uf"), resultSet.getString("nome"));
 					
 					estados.add(estado);
 				}
@@ -91,10 +95,10 @@ public class EstadoDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "UPDATE estado SET sigla = " +
+			String sql = "UPDATE estado SET uf = " +
 					estado.getSigla() + 
 					", nome = " + estado.getNome() +
-					" WHERE sigla = " + estado.getSigla();
+					" WHERE uf = " + estado.getSigla();
 			
 			stmt.execute(sql);			
 			
