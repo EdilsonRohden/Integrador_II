@@ -16,9 +16,9 @@ public class EstadoDao extends Dao{
 		try {
 			Statement stmt = connection.createStatement();
 			
-			String sql = "INSERT INTO estado (uf, nome) VALUES (" +
-			estado.getSigla() + "," +
-			estado.getNome() + ");";
+			String sql = "INSERT INTO estado (uf, nome) VALUES ('" +
+			estado.getSigla() + "','" +
+			estado.getNome() + "')";
 			
 			stmt.execute(sql);
 			
@@ -32,7 +32,7 @@ public class EstadoDao extends Dao{
 	
 	public Estado getEstadoBySigla(Estado param) {
 		conectar();
-		Estado estado = new Estado();
+		Estado estado = null;
 		
 		try {
 			Statement stmt = connection.createStatement();
@@ -43,7 +43,9 @@ public class EstadoDao extends Dao{
 			ResultSet result = stmt.executeQuery(sql);
 			
 			if( result != null) {
-				while (result.next()) {
+				
+				if (result.next()) {
+					estado = new Estado();
 					estado.setNome(result.getString("nome"));
 					estado.setSigla(result.getString("uf"));
 				}
@@ -95,10 +97,10 @@ public class EstadoDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "UPDATE estado SET uf = " +
+			String sql = "UPDATE estado SET uf = '" +
 					estado.getSigla() + 
-					", nome = " + estado.getNome() +
-					" WHERE uf = " + estado.getSigla();
+					"', nome = '" + estado.getNome() +
+					"' WHERE uf = '" + estado.getSigla() + "'";
 			
 			stmt.execute(sql);			
 			

@@ -50,11 +50,11 @@ public class ClienteDao extends Dao{
 			Statement stmt = connection.createStatement();
 			
 			String sql = "UPDATE cliente SET " + 
-					"bairro = " + cliente.getBairro() +
-					", cep = " + cliente.getCep() +
-					", fone = " + cliente.getFone() +
-					", email = " + cliente.getEmail() + 
-					" WHERE id_pessoa = " + cliente.getId() + ";";
+					"bairro = '" + cliente.getBairro() +
+					"', cep = '" + cliente.getCep() +
+					"', fone = '" + cliente.getFone() +
+					"', email = '" + cliente.getEmail() + 
+					"' WHERE id_pessoa = " + cliente.getId() + ";";
 			
 			stmt.execute(sql);
 			
@@ -73,12 +73,12 @@ public class ClienteDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "INSERT INTO cliente (id_pessoa, bairro, cep, fone, email) VALUES (" + 
-					cliente.getId() + ", " +
-					cliente.getBairro() + ", " +
-					cliente.getCep() + ", " +
-					cliente.getFone() + ", " +
-					cliente.getEmail() + ");";
+			String sql = "INSERT INTO cliente (id_pessoa, bairro, cep, fone, email) VALUES ('" + 
+					cliente.getId() + "', '" +
+					cliente.getBairro() + "', '" +
+					cliente.getCep() + "', '" +
+					cliente.getFone() + "', '" +
+					cliente.getEmail() + "');";
 			
 			stmt.execute(sql);
 			
