@@ -3,6 +3,7 @@ package integrador_ii.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import integrador_ii.models.Cidade;
@@ -31,9 +32,35 @@ public class CidadeDao extends Dao{
 	}
 	
 	public List<Cidade> getCidades() {
+		conectar();
+		List<Cidade> cidades = new ArrayList<Cidade>();
 		
+		try {
+			
+			Statement stmt = connection.createStatement();
+			String sql = "SELECT * FROM cidade";
+			
+			ResultSet resultSet = stmt.executeQuery(sql);
+			
+			if( resultSet != null) {
+				while(resultSet.next()) {
+					Cidade cidade = new Cidade();
+					cidade.setCodigoIbge(resultSet.getInt("id_ibge"));
+					cidade.setNome(resultSet.getString("nome"));
+					cidade.setEstado(new Estado(resultSet.getString("uf")));
+					
+					cidades.add(cidade);
+				}
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			desconectar();
+		}
 		
-		return null;
+		return cidades;
 	}
 	
 	public Cidade getCidadeByCodigoIbge(Cidade cidade) {

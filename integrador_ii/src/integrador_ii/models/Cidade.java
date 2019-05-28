@@ -14,8 +14,8 @@ public class Cidade {
 	public Cidade(Integer codigoIbge) {
 		this.codigoIbge = codigoIbge;
 	}
+	public Cidade() {}
 	
-
 	public Estado getEstado() {
 		return estado;
 	}

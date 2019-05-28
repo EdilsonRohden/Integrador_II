@@ -59,9 +59,10 @@ public class CadastroPessoa extends JInternalFrame {
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(96, 63, 169, 20);
 		
-		/*CidadeService cidadeService = new CidadeService();
+		CidadeService cidadeService = new CidadeService();
 		model = cidadeService.getCidadesComboBox();
-		comboBox.setModel(model);*/
+		comboBox.setModel(model);
+		
 		getContentPane().add(comboBox);
 		
 		txtNome = new JTextField();
