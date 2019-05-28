@@ -16,10 +16,10 @@ public class CidadeDao extends Dao{
 		try {
 			Statement stmt = connection.createStatement();
 			
-			String sql = "INSERT INTO cidade (uf, id_ibge, nome) VALUES ("+
-			cidade.getEstado().getSigla() + ", " +
-					cidade.getCodigoIbge() + ", " +
-					cidade.getNome() + ");";
+			String sql = "INSERT INTO cidade (uf, id_ibge, nome) VALUES ('"+
+			cidade.getEstado().getSigla() + "', '" +
+					cidade.getCodigoIbge() + "', '" +
+					cidade.getNome() + "')";
 			
 			stmt.execute(sql);
 			
@@ -70,10 +70,10 @@ public class CidadeDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "UPDATE cidade SET uf = " + cidade.getEstado().getSigla() +
-					", id_ibge = " + cidade.getCodigoIbge() +
-					", nome = " + cidade.getNome() +
-					" WHERE id_ibge = " + cidade.getCodigoIbge() + ";";
+			String sql = "UPDATE cidade SET uf = '" + cidade.getEstado().getSigla() +
+					"', id_ibge = " + cidade.getCodigoIbge() +
+					", nome = '" + cidade.getNome() +
+					"' WHERE id_ibge = '" + cidade.getCodigoIbge() + "';";
 			
 			stmt.execute(sql);
 			

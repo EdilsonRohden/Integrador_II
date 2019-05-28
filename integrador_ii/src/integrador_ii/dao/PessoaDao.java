@@ -20,9 +20,9 @@ public class PessoaDao extends Dao {
 			Statement stmt = connection.createStatement();
 			String sql = null;
 
-			sql = "INSET INTO pessoa (cdibge, nome) VALUES (" +
-					pessoa.getCidade().getCodigoIbge() + ", "
-					+ pessoa.getNome() + ";";
+			sql = "INSERT INTO pessoa (id_ibge, nome) VALUES (" +
+					pessoa.getCidade().getCodigoIbge() + ", '"
+					+ pessoa.getNome() + "';";
 			stmt.execute(sql);
 
 		} catch (SQLException e) {
@@ -42,12 +42,12 @@ public class PessoaDao extends Dao {
 		try {
 
 			Statement stmt = connection.createStatement();
-			sql = "SELECT * FROM pessoa WHERE idpessoa = " + pessoa.getId() + ";";
+			sql = "SELECT * FROM pessoa WHERE id_pessoa = " + pessoa.getId() + ";";
 			ResultSet resultSet = stmt.executeQuery(sql);
-			int cdIbge = resultSet.getInt("cdibge");
+			int cdIbge = resultSet.getInt("id_ibge");
 			Cidade cidade = cidadeDao.getCidadeByCodigoIbge(new Cidade(cdIbge));
 
-			result = new Pessoa(resultSet.getInt("idpessoa"), cidade, resultSet.getString("nome"));
+			result = new Pessoa(resultSet.getInt("id_pessoa"), cidade, resultSet.getString("nome"));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -64,16 +64,16 @@ public class PessoaDao extends Dao {
 		try {
 
 			Statement stmt = connection.createStatement();
-			String sql = "SELECT * FROM pessoas";
+			String sql = "SELECT * FROM pessoa";
 			ResultSet resultSet = stmt.executeQuery(sql);
 			CidadeDao cidadeDao = new CidadeDao();
 
 			while (resultSet.next()) {
 
-				int cdIbge = resultSet.getInt("cdibge");
+				int cdIbge = resultSet.getInt("id_ibge");
 				Cidade cidade = cidadeDao.getCidadeByCodigoIbge(new Cidade(cdIbge));
 
-				pessoas.add(new Pessoa(resultSet.getInt("idpessoa"), cidade, resultSet.getString("nome")));
+				pessoas.add(new Pessoa(resultSet.getInt("id_pessoa"), cidade, resultSet.getString("nome")));
 			}
 
 		} catch (SQLException e) {
@@ -91,8 +91,8 @@ public class PessoaDao extends Dao {
 
 			Statement stmt = connection.createStatement();
 
-			String sql = "UPDATE pessoa SET " + "cdibge = " + pessoa.getCidade().getCodigoIbge() + ", " + "nome = "
-					+ pessoa.getNome() + " WHERE idpessoa = " + pessoa.getId() + ";";
+			String sql = "UPDATE pessoa SET " + "id_ibge = " + pessoa.getCidade().getCodigoIbge() + ", " + "nome = '"
+					+ pessoa.getNome() + "' WHERE id_pessoa = " + pessoa.getId() + ";";
 
 			stmt.execute(sql);
 

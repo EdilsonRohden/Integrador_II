@@ -18,10 +18,10 @@ public class UsuarioDao extends Dao{
 			Statement stmt = connection.createStatement();
 			
 			String sql = "UPDATE usuario SET " +
-					"login = " + usuario.getLogin() + ", " +
-					"senha = " + usuario.getSenha() + "," +
-					"adm = " + usuario.isAdm() +
-					" WHERE idpessoa = " + usuario.getId();
+					"login = '" + usuario.getLogin() + "'," +
+					"senha = '" + usuario.getSenha() + "'," +
+					"adm = '" + usuario.isAdm() +
+					"' WHERE idpessoa = " + usuario.getId();
 			
 			stmt.execute(sql);
 			
@@ -42,14 +42,14 @@ public class UsuarioDao extends Dao{
 			
 			if (usuario.getId() != null) {
 				sql = "UPDATE usuario SET " +
-						"login = " + usuario.getLogin() + ", " +
-						"senha = " + usuario.getSenha() + "," +
-						"adm = " + usuario.isAdm() +
-						" WHERE idpessoa = " + usuario.getId();
+						"login = '" + usuario.getLogin() + "', " +
+						"senha = '" + usuario.getSenha() + "'," +
+						"adm = '" + usuario.isAdm() +
+						"' WHERE idpessoa = " + usuario.getId();
 				stmt.execute(sql);
 			}else {
-				sql = "INSERT INTO usuario( login, senha, adm) VALUES ("+
-						usuario.getLogin()+","+usuario.getSenha()+","+usuario.isAdm()+");";
+				sql = "INSERT INTO usuario( login, senha, adm) VALUES ('"+
+						usuario.getLogin()+"','"+usuario.getSenha()+"','"+usuario.isAdm()+"');";
 				
 				stmt.execute(sql);
 			}

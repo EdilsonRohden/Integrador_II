@@ -88,7 +88,7 @@ public class ContaDao extends Dao{
 			Statement stmt = connection.createStatement();
 			
 			String sql = "INSERT INTO conta (id_conta, id_primeiro_nivel, id_segundo_nivel, descricao) VALUES ( null, "+
-					conta.getIdP()+", " + conta.getIdS() + ", " + conta.getDescricaoS() + ");";
+					conta.getIdP()+", " + conta.getIdS() + ", '" + conta.getDescricaoS() + "');";
 			
 			stmt.execute(sql);
 			

@@ -13,10 +13,13 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class CadastroPessoa extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1439244902409942071L;
 	private JTextField txtNome;
 	private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 	private JTextField txtId;
@@ -55,9 +58,10 @@ public class CadastroPessoa extends JInternalFrame {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(96, 63, 169, 20);
-		CidadeService cidadeService = new CidadeService();
+		
+		/*CidadeService cidadeService = new CidadeService();
 		model = cidadeService.getCidadesComboBox();
-		comboBox.setModel(model);
+		comboBox.setModel(model);*/
 		getContentPane().add(comboBox);
 		
 		txtNome = new JTextField();
