@@ -87,7 +87,7 @@ public class TelaPrincipal extends JFrame {
 		});
 		mnCadastros.add(mntmContas);
 		
-		JMenuItem mntmMovimentao = new JMenuItem("MovimentaÃ§Ã£o");
+		JMenuItem mntmMovimentao = new JMenuItem("Movimentação");
 		mntmMovimentao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CadastroMovimentacao telaMovimentacao = new CadastroMovimentacao();
@@ -127,7 +127,7 @@ public class TelaPrincipal extends JFrame {
 		});
 		mnCadastros.add(mntmPessoas);
 		
-		JMenu mnRelatrios = new JMenu("RelatÃ³rios");
+		JMenu mnRelatrios = new JMenu("Relatórios");
 		menuBar.add(mnRelatrios);
 		
 		JMenuItem mntmPlanoDeContas = new JMenuItem("Plano de Contas");
