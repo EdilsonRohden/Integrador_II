@@ -40,14 +40,17 @@ public class PessoaDao extends Dao {
 		Pessoa result = null;
 
 		try {
-
+			
 			Statement stmt = connection.createStatement();
 			sql = "SELECT * FROM pessoa WHERE id_pessoa = " + pessoa.getId() + ";";
 			ResultSet resultSet = stmt.executeQuery(sql);
-			int cdIbge = resultSet.getInt("id_ibge");
-			Cidade cidade = cidadeDao.getCidadeByCodigoIbge(new Cidade(cdIbge));
-
-			result = new Pessoa(resultSet.getInt("id_pessoa"), cidade, resultSet.getString("nome"));
+			if(resultSet.next()) {			
+				int cdIbge = resultSet.getInt("id_ibge");
+				Cidade cidade = cidadeDao.getCidadeByCodigoIbge(new Cidade(cdIbge));
+				result = new Pessoa(resultSet.getInt("id_pessoa"), cidade, resultSet.getString("nome"));
+			}
+			
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();

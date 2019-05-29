@@ -73,10 +73,10 @@ public class CadastroPessoa extends JInternalFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String[] splitado = model.getSelectedItem().toString().split("-");
-				Integer codIbge = Integer.parseInt(splitado[0]);
+				Integer codIbge = Integer.parseInt(model.getSelectedItem().toString().split("-")[0]);
 				PessoaService pessoaService = new PessoaService();
 				pessoaService.salvar(txtNome.getText(), txtId.getText(), codIbge);
+				dispose();
 			}
 		});
 		btnSalvar.setBounds(12, 119, 114, 25);

@@ -52,7 +52,7 @@ public class CidadeService {
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		
 		for (Cidade cidade : cidades) {
-			model.addElement(cidade.getCodigoIbge().toString() + " - " + cidade.getNome());;
+			model.addElement(cidade.getCodigoIbge().toString() + "-" + cidade.getNome());;
 		}
 		
 		return model;

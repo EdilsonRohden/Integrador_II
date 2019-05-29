@@ -22,12 +22,14 @@ public class ClienteDao extends Dao{
 			ResultSet result = stmt.executeQuery(sql);
 			
 			if(result != null) {
-				cliente.setId(result.getInt("id_pessoa"));
-				cliente.setBairro(result.getString("bairro"));
-				cliente.setCep(result.getString("cep"));
-				cliente.setFone(result.getString("fone"));
-				cliente.setEmail(result.getString("email"));
-
+				if (result.next()) {
+					cliente.setId(result.getInt("id_pessoa"));
+					cliente.setBairro(result.getString("bairro"));
+					cliente.setCep(result.getString("cep"));
+					cliente.setFone(result.getString("fone"));
+					cliente.setEmail(result.getString("email"));
+				}
+			
 				return cliente;
 			}
 			
