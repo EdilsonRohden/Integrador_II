@@ -5,8 +5,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import integrador_ii.models.Usuario;
+import integrador_ii.services.LoginService;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
@@ -17,8 +22,8 @@ public class Login extends JFrame {
 
 	private static final long serialVersionUID = -7061486212416495829L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtLogin;
+	private JPasswordField txtPassword;
 
 
 	public static void main(String[] args) {
@@ -34,9 +39,6 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 495, 251);
@@ -48,9 +50,18 @@ public class Login extends JFrame {
 		JButton btnLogin = new JButton("login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal telaPrincipal = new TelaPrincipal();
-				telaPrincipal.setVisible(true);
-				dispose();
+				LoginService loginService = new LoginService();
+				
+				Usuario usuario = loginService.autenticar(txtLogin.getText(), txtPassword.getText());
+				
+				if(usuario == null) {
+					JOptionPane.showMessageDialog(null, "Usuario não encontrado!");
+				}else {
+					TelaPrincipal telaPrincipal = new TelaPrincipal(usuario);
+					telaPrincipal.setVisible(true);
+					dispose();					
+				}
+				
 			}
 		});
 		btnLogin.setBounds(23, 178, 114, 25);
@@ -73,14 +84,14 @@ public class Login extends JFrame {
 		lblNewLabel.setBounds(43, 51, 79, 15);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(139, 12, 124, 19);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtLogin = new JTextField();
+		txtLogin.setBounds(139, 12, 124, 19);
+		contentPane.add(txtLogin);
+		txtLogin.setColumns(10);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(140, 43, 124, 23);
-		contentPane.add(passwordField);
+		txtPassword = new JPasswordField();
+		txtPassword.setBounds(140, 43, 124, 23);
+		contentPane.add(txtPassword);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("/home/edislon/Imagens/voMataSpliter.jpeg"));

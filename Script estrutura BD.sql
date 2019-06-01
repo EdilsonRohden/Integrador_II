@@ -1,71 +1,70 @@
-﻿create table estado (uf varchar(10) not null primary key,
-		     nome varchar(60) not null)	;
+﻿CREATE DATABASE financeiro;
 
-
-
-create table cidade (
-id_ibge integer not null primary key,
-uf varchar(10) references estado(uf), 
-nome varchar(50) not null);
-
-
-
-
-create table pessoa (id_pessoa serial not null primary key,
-id_ibge integer references cidade(id_ibge),
-nome varchar(100) not null); 
-
-
-
-create table usuario (id_pessoa integer not null primary key references pessoa(id_pessoa),
-login varchar(100) not null,
-senha varchar(30),
-adm boolean not null
+CREATE TABLE estado (
+	uf VARCHAR(10) PRIMARY KEY,
+	nome VARCHAR(60) NOT NULL
 );
 
-
-create table cliente (
-id_pessoa integer not null primary key references pessoa(id_pessoa), 
-bairro varchar(70),
-cep varchar(10),
-fone varchar(15),
-email varchar(70)
+CREATE TABLE cidade (
+	id_ibge INTEGER PRIMARY KEY,
+	uf VARCHAR(10) NOT NULL REFERENCES estado(uf), 
+	nome VARCHAR(50) NOT NULL
 );
 
-create table primeiro_nivel (
-id integer not null primary key,
-descricao varchar(500));
+CREATE TABLE pessoa (
+	id_pessoa SERIAL PRIMARY KEY,
+	id_ibge INTEGER NOT NULL REFERENCES cidade(id_ibge),
+	nome VARCHAR(100) NOT NULL
+); 
 
+CREATE TABLE usuario (
+	id_pessoa INTEGER PRIMARY KEY REFERENCES pessoa(id_pessoa),
+	login VARCHAR(100) NOT NULL,
+	senha VARCHAR(30) NOT NULL,
+	adm BOOLEAN NOT NULL
+);
 
+CREATE TABLE cliente (
+	id_pessoa INTEGER PRIMARY KEY REFERENCES pessoa(id_pessoa), 
+	bairro VARCHAR(70),
+	cep VARCHAR(10),
+	fone VARCHAR(15),
+	email VARCHAR(70)
+);
 
-create table conta(
-id_conta serial not null primary key,
-id_primeiro_nivel integer references primeiro_nivel(id),
-id_segundo_nivel varchar(500),
-descricao varchar(500));
+CREATE TABLE primeiro_nivel (
+	id INTEGER PRIMARY KEY,
+	descricao VARCHAR(512)
+);
 
+CREATE TABLE conta(
+	id_conta SERIAL PRIMARY KEY,
+	id_primeiro_nivel INTEGER REFERENCES primeiro_nivel(id),
+	id_segundo_nivel INTEGER NOT NULL,
+	descricao VARCHAR(512)
+);
 
-create table movimentacao (
-id_movimentacao serial not null primary key,
-id_pessoa integer not null references cliente(id_pessoa),
-id_conta integer references conta(id_conta),
-data_movimentacao date,
-valor_movimentacao numeric(9,2),
-descricao varchar(500),
-excluido boolean not null);
+CREATE TABLE movimentacao (
+	id_movimentacao serial PRIMARY KEY,
+	id_pessoa INTEGER NOT NULL REFERENCES cliente(id_pessoa),
+	id_conta INTEGER REFERENCES conta(id_conta),
+	data_movimentacao DATE NOT NULL DEFAULT CURRENT_DATE,
+	valor_movimentacao NUMERIC(9,2) DEFAULT 0,
+	descricao VARCHAR(512),
+	excluido BOOLEAN DEFAULT FALSE
+);
 
+CREATE TABLE movimento_alteracao (
+	id_alteracao SERIAL PRIMARY KEY,
+	id_movimentacao INTEGER NOT NULL REFERENCES movimentacao(id_movimentacao),
+	id_pessoa INTEGER NOT NULL REFERENCES usuario(id_pessoa),
+	tipo_alteracao VARCHAR(100),
+	data_alteracao DATE NOT NULL DEFAULT CURRENT_DATE
+);
 
-
-create table movimento_alteracao (
-id_alteracao serial not null primary key,
-id_movimentacao integer not null references movimentacao(id_movimentacao),
-id_pessoa integer not null references usuario(id_pessoa),
-tipo_alteracao varchar(100),
-data_alteracao date);
-
-
-
-
+INSERT INTO primeiro_nivel (id, descricao) VALUES
+(1, 'Crédito'),
+(2, 'Débito');
 
 
 

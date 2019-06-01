@@ -14,14 +14,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CadastroEstado extends JInternalFrame {
+	private static final long serialVersionUID = 6967334925048618312L;
 	private JTextField txtNome;
 	private JTextField txtSigla;
 	private JButton btnSalvar;
 	private JButton btnCalcelar;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -35,9 +33,6 @@ public class CadastroEstado extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public CadastroEstado() {
 		setTitle("Cadastro de Estado");
 		setBounds(100, 100, 248, 175);

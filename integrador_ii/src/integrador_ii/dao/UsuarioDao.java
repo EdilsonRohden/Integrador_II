@@ -1,5 +1,6 @@
 package integrador_ii.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,7 +22,7 @@ public class UsuarioDao extends Dao{
 					"login = '" + usuario.getLogin() + "'," +
 					"senha = '" + usuario.getSenha() + "'," +
 					"adm = '" + usuario.isAdm() +
-					"' WHERE idpessoa = " + usuario.getId();
+					"' WHERE id_pessoa = " + usuario.getId();
 			
 			stmt.execute(sql);
 			
@@ -35,24 +36,17 @@ public class UsuarioDao extends Dao{
 
 	public void salvar(Usuario usuario) {
 		conectar();
-		String sql = null;
 		try {
 			
-			Statement stmt = connection.createStatement();
+			String sql = "INSERT INTO usuario (id_pessoa, login, senha, adm) VALUES (?, ?, ?, ?)";
+			PreparedStatement ps = connection.prepareStatement(sql);
 			
-			if (usuario.getId() != null) {
-				sql = "UPDATE usuario SET " +
-						"login = '" + usuario.getLogin() + "', " +
-						"senha = '" + usuario.getSenha() + "'," +
-						"adm = '" + usuario.isAdm() +
-						"' WHERE idpessoa = " + usuario.getId();
-				stmt.execute(sql);
-			}else {
-				sql = "INSERT INTO usuario( login, senha, adm) VALUES ('"+
-						usuario.getLogin()+"','"+usuario.getSenha()+"','"+usuario.isAdm()+"');";
-				
-				stmt.execute(sql);
-			}
+			ps.setInt(1, usuario.getId());
+			ps.setString(2, usuario.getLogin());
+			ps.setString(3, usuario.getSenha());
+			ps.setBoolean(4, usuario.isAdm());
+			
+			ps.execute();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -76,7 +70,7 @@ public class UsuarioDao extends Dao{
 			if (resultSet != null) {
 				List<Usuario> usuarios = new ArrayList<Usuario>();
 				while(resultSet.next()) {
-					Integer id = resultSet.getInt("idpessoa");
+					Integer id = resultSet.getInt("id_pessoa");
 					String login = resultSet.getString("login");
 					String senha = resultSet.getString("senha");
 					boolean adm = resultSet.getBoolean("adm");
@@ -99,20 +93,22 @@ public class UsuarioDao extends Dao{
 
 	public Usuario getUsuarioById(Usuario user) {
 		conectar();
-		
+		Usuario usuario = null; 
 		try {
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "SELECT * FROM usuario WHERE idpessoa = " + user.getId();
+			String sql = "SELECT * FROM usuario WHERE id_pessoa = " + user.getId();
 			
 			ResultSet result = stmt.executeQuery(sql);
 			
 			if (result != null) {
-				Usuario usuario = new Usuario(user.getId());
-				usuario.setAdm(result.getBoolean("adm"));
-				usuario.setLogin(result.getString("login"));
-				usuario.setSenha(result.getString("senha"));
+				if(result.next()) {					
+					usuario = new Usuario(user.getId());
+					usuario.setAdm(result.getBoolean("adm"));
+					usuario.setLogin(result.getString("login"));
+					usuario.setSenha(result.getString("senha"));
+				}
 			}
 			
 			
@@ -122,7 +118,37 @@ public class UsuarioDao extends Dao{
 			desconectar();
 		}
 
-		return null;
+		return usuario;
+	}
+
+	public Usuario autenticarERetornar(String login, String password) {
+		conectar();
+		Usuario usuario = null;
+		try {
+			
+			String sql = "SELECT * FROM usuario WHERE login=? AND senha=?";
+			
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ps.setString(1, login);
+			ps.setString(2, password);
+			
+			ResultSet result = ps.executeQuery();
+			
+			if(result != null) {
+				if(result.next()) {
+					usuario = new Usuario();
+					usuario.setId(result.getInt("id_pessoa"));
+					usuario.setAdm(result.getBoolean("adm"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			desconectar();
+		}
+		
+		return usuario;
 	}
 
 }

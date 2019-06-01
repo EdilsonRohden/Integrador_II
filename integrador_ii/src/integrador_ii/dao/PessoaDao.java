@@ -1,5 +1,6 @@
 package integrador_ii.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,14 +17,13 @@ public class PessoaDao extends Dao {
 		conectar();
 
 		try {
-
-			Statement stmt = connection.createStatement();
-			String sql = null;
-
-			sql = "INSERT INTO pessoa (id_ibge, nome) VALUES (" +
-					pessoa.getCidade().getCodigoIbge() + ", '"
-					+ pessoa.getNome() + "';";
-			stmt.execute(sql);
+			
+			String sql = "INSERT INTO pessoa (id_ibge, nome) VALUES ( ?, ?)";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, pessoa.getCidade().getCodigoIbge());
+			ps.setString(2, pessoa.getNome());
+			
+			ps.execute();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

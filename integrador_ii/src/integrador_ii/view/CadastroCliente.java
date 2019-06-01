@@ -20,6 +20,8 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CadastroCliente extends JInternalFrame {
 	/**
@@ -70,16 +72,16 @@ public class CadastroCliente extends JInternalFrame {
 		txtIdPessoa.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.addMouseListener(new MouseAdapter() {
+		comboBox.addFocusListener(new FocusAdapter() {
 			@Override
-			public void mouseExited(MouseEvent e) {
+			public void focusLost(FocusEvent e) {
 				String nome = model.getSelectedItem().toString();
 				for (Pessoa pessoa : pessoas) {
 					if(pessoa.getNome().equals(nome)) {
 						txtIdPessoa.setText(pessoa.getId().toString());
 						break;
 					}
-				}
+				}				
 			}
 		});
 		comboBox.setBounds(191, 7, 159, 24);
@@ -137,6 +139,7 @@ public class CadastroCliente extends JInternalFrame {
 				
 				ClienteService clienteService = new ClienteService();
 				clienteService.salvar(idpessoa, bairro, cep, fone, email);
+				dispose();
 				
 				
 			}

@@ -17,20 +17,19 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class CadastroMovimentacao extends JInternalFrame {
+	private static final long serialVersionUID = -8971273233348356712L;
 	private JTextField txrIdCliente;
 	private JTextField txtData;
 	private JTextField txtValor;
 	private DefaultComboBoxModel<String> modelConta = new DefaultComboBoxModel<String>();
 	private DefaultComboBoxModel<String> modelCliente = new DefaultComboBoxModel<String>();
+	private JTextField txtDescricao;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,17 +42,12 @@ public class CadastroMovimentacao extends JInternalFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 	public CadastroMovimentacao() {
 		setTitle("Cadastro de Movimentação");
 		setBounds(100, 100, 362, 300);
 		getContentPane().setLayout(null);
 		
 		MovimentoService mvService = new MovimentoService();
-		List<Movimento> movimentos = mvService.getMovimentos();
 		
 		ClienteService clienteService = new ClienteService();
 		List<Cliente> clientes = clienteService.getClientes();
@@ -66,7 +60,7 @@ public class CadastroMovimentacao extends JInternalFrame {
 		List<Conta> contas = contaService.getContas();
 		
 		for (Conta conta : contas) {
-			modelConta.addElement(conta.getIdP()+"."+conta.getIdS()+"-"+conta.getDescricaoS());
+			modelConta.addElement(conta.getId()+ "/ " +conta.getIdP()+"."+conta.getIdS()+" - "+conta.getDescricaoS());
 		}
 		
 		JLabel lblCliente = new JLabel("Cliente:");
@@ -92,9 +86,9 @@ public class CadastroMovimentacao extends JInternalFrame {
 		getContentPane().add(comboBoxCliente);
 		
 		txtData = new JTextField();
-		txtData.setBounds(96, 75, 124, 19);
+		txtData.setBounds(96, 75, 244, 19);
 		getContentPane().add(txtData);
-		txtData.setText((new Date()).toString());
+		txtData.setText("");
 		txtData.setColumns(10);
 		
 		txtValor = new JTextField();
@@ -106,19 +100,24 @@ public class CadastroMovimentacao extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					long dataMovimento = Date.parse(txtData.getText());
+					Date dataMovimento = txtData.getText().isEmpty() ? null : Date.valueOf(txtData.getText());
+					String descricao = txtDescricao.getText();
 					double valor = Double.parseDouble(txtValor.getText());
 					String nome = modelCliente.getSelectedItem().toString();
-					int idCliente;
+					int idCliente = 0;
+					int idConta = Integer.parseInt(modelConta.getSelectedItem().toString().split("/")[0]);
 					for (Cliente cliente : clientes) {
 						if(cliente.getNome().equals(nome)) {
 							idCliente = cliente.getId();
 						}
 					}
+					mvService.salvar(new Cliente(idCliente), new Movimento(idConta, dataMovimento, valor, descricao));
 					
 					
 				}catch (Exception e) {
-					
+					e.printStackTrace();
+				}finally {
+					dispose();
 				}
 			}
 		});
@@ -142,7 +141,15 @@ public class CadastroMovimentacao extends JInternalFrame {
 		comboBoxConta.setBounds(96, 34, 244, 24);
 		comboBoxConta.setModel(modelConta);
 		getContentPane().add(comboBoxConta);
+		
+		txtDescricao = new JTextField();
+		txtDescricao.setBounds(96, 146, 244, 19);
+		getContentPane().add(txtDescricao);
+		txtDescricao.setColumns(10);
+		
+		JLabel lblDescrio = new JLabel("Descrição:");
+		lblDescrio.setBounds(12, 148, 76, 15);
+		getContentPane().add(lblDescrio);
 
 	}
-
 }

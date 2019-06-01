@@ -1,5 +1,6 @@
 package integrador_ii.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,6 +13,7 @@ public class ClienteDao extends Dao{
 
 	public Cliente getClienteById(Cliente cliente) {
 		conectar();
+		Cliente result_cliente = null; 
 		
 		try {
 			
@@ -23,14 +25,13 @@ public class ClienteDao extends Dao{
 			
 			if(result != null) {
 				if (result.next()) {
-					cliente.setId(result.getInt("id_pessoa"));
-					cliente.setBairro(result.getString("bairro"));
-					cliente.setCep(result.getString("cep"));
-					cliente.setFone(result.getString("fone"));
-					cliente.setEmail(result.getString("email"));
+					result_cliente = new Cliente();
+					result_cliente.setId(result.getInt("id_pessoa"));
+					result_cliente.setBairro(result.getString("bairro"));
+					result_cliente.setCep(result.getString("cep"));
+					result_cliente.setFone(result.getString("fone"));
+					result_cliente.setEmail(result.getString("email"));
 				}
-			
-				return cliente;
 			}
 			
 		} catch (SQLException e) {
@@ -40,7 +41,7 @@ public class ClienteDao extends Dao{
 		}
 		
 		
-		return null;
+		return result_cliente;
 	}
 
 	public void update(Cliente cliente) {
@@ -73,16 +74,16 @@ public class ClienteDao extends Dao{
 		
 		try {
 			
-			Statement stmt = connection.createStatement();
+			String sql = "INSERT INTO cliente (id_pessoa, bairro, cep, fone, email) VALUES (?, ?, ?, ?, ?)";
+			PreparedStatement ps = connection.prepareStatement(sql);
 			
-			String sql = "INSERT INTO cliente (id_pessoa, bairro, cep, fone, email) VALUES ('" + 
-					cliente.getId() + "', '" +
-					cliente.getBairro() + "', '" +
-					cliente.getCep() + "', '" +
-					cliente.getFone() + "', '" +
-					cliente.getEmail() + "');";
+			ps.setInt(1, cliente.getId());
+			ps.setString(2, cliente.getBairro());
+			ps.setString(3, cliente.getCep());
+			ps.setString(4, cliente.getFone());
+			ps.setString(5, cliente.getEmail());
 			
-			stmt.execute(sql);
+			ps.execute();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,7 +101,7 @@ public class ClienteDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "SELECT * FROM clientes JOIN pessoa ON pessoa.id_pessoa = cliente.id_pessoa ";
+			String sql = "SELECT * FROM cliente JOIN pessoa ON pessoa.id_pessoa = cliente.id_pessoa ";
 			
 			ResultSet resultSet = stmt.executeQuery(sql);
 			

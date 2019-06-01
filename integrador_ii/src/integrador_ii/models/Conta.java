@@ -29,6 +29,17 @@ public class Conta {
 		this.descricaoS = descricaoS;
 	}
 
+	public Conta(Integer idPNum, Integer idSNum, String descricaoS) {
+		this.idP = idPNum;
+		this.idS = idSNum;
+		this.descricaoS = descricaoS; 
+	}
+
+	public Conta(int idP, String descricaoP) {
+		this.idP = idP;
+		this.descricaoP = descricaoP;
+	}
+
 	public String getDescricaoP() {
 		return descricaoP;
 	}

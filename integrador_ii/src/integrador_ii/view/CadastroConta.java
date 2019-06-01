@@ -19,18 +19,11 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class CadastroConta extends JInternalFrame {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3426010029033819751L;
 	private JTextField txtIdS;
 	private JTextField txtDescricaoS;
 	private JTextField txtId;
 	private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -44,17 +37,13 @@ public class CadastroConta extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public CadastroConta() {
 		setTitle("Cadastro de Contas");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		
 		ContaService contaService = new ContaService();
-		List<Conta> contas = new ArrayList<Conta>();
-		contas = contaService.getContas();
+		List<Conta> contas = contaService.getContasPrimeiroNivel();
 		for (Conta conta : contas) {
 			model.addElement(conta.getIdP()+"-"+conta.getDescricaoP());
 		}

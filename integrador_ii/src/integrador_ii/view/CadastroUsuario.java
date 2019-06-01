@@ -9,7 +9,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import integrador_ii.models.Pessoa;
 import integrador_ii.models.Usuario;
+import integrador_ii.services.PessoaService;
 import integrador_ii.services.Usuarioservice;
 
 import javax.swing.JComboBox;
@@ -20,17 +22,17 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CadastroUsuario extends JInternalFrame {
+	private static final long serialVersionUID = 2865229064350768750L;
 	private JTextField txtIdPessoa;
 	private JTextField txtLogin;
 	private JPasswordField passwordTxt;
 	private JPasswordField passwordTxtRetry;
 	private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -44,16 +46,14 @@ public class CadastroUsuario extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public CadastroUsuario() {
 		setTitle("Cadastro de Usuario");
 		setBounds(100, 100, 385, 277);
 		getContentPane().setLayout(null);
 		
 		Usuarioservice usuarioService = new Usuarioservice();
-		List<Usuario> usuarios = usuarioService.getUsuarios();
+		PessoaService pessoaService = new PessoaService();
+		List<Pessoa> pessoas = pessoaService.getPessoas();
 		
 		JCheckBox chckbxAdm = new JCheckBox("ADM");
 		chckbxAdm.setBounds(156, 149, 66, 23);
@@ -103,24 +103,24 @@ public class CadastroUsuario extends JInternalFrame {
 		txtIdPessoa.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				String escolhido = model.getSelectedItem().toString();
+				for (Pessoa pessoa : pessoas) {
+					if (escolhido.equals(pessoa.getNome())) {
+						txtIdPessoa.setText(Integer.toString(pessoa.getId()));
+						break;
+					}
+				}				
+			}
+		});
 		comboBox.setBounds(231, 2, 129, 25);
-		for (Usuario usuario : usuarios) {
-			model.addElement(usuario.getNome());
+		for (Pessoa pessoa : pessoas) {
+			model.addElement(pessoa.getNome());
 		}
 		comboBox.setModel(model);
 		getContentPane().add(comboBox);
-		comboBox.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseExited(MouseEvent e) {
-				String escolhido = model.getSelectedItem().toString();
-				for (Usuario usuario : usuarios) {
-					if (escolhido.equals(usuario.getNome())) {
-						txtIdPessoa.setText(Integer.toString(usuario.getId()));
-						break;
-					}
-				}
-			}
-		});
 		
 		JLabel lblLogin = new JLabel("Login:");
 		lblLogin.setBounds(12, 52, 66, 15);

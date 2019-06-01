@@ -12,8 +12,9 @@ public class ClienteService {
 	public void salvar(String idPessoa, String bairro, String cep, String fone, String email) {
 		PessoaDao pessoadao = new PessoaDao();
 		ClienteDao clienteDao = new ClienteDao();
-		
-		Cliente cliente = (Cliente) pessoadao.getPessoaById(new Pessoa(Integer.parseInt(idPessoa)));
+				
+		Pessoa pessoa = pessoadao.getPessoaById(new Pessoa(Integer.parseInt(idPessoa)));
+		Cliente cliente = new Cliente(pessoa.getId(), pessoa.getNome());
 		
 		cliente.setBairro(bairro);
 		cliente.setCep(cep);

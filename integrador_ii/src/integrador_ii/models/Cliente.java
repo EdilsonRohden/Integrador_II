@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Cliente extends Pessoa{
 
-	private Integer idPessoa;
 	private String bairro;
 	private String cep;
 	private String fone;
@@ -14,16 +13,13 @@ public class Cliente extends Pessoa{
 	public Cliente() {}
 	
 	public Cliente(int idPessoa) {
-		this.idPessoa = idPessoa;
+		this.id = idPessoa;
 	}
-	
-	
-	public Integer getIdPessoa() {
-		return idPessoa;
+	public Cliente(int id, String nome) {
+		this.id = id;
+		this.nome = nome;
 	}
-	public void setIdPessoa(Integer idPessoa) {
-		this.idPessoa = idPessoa;
-	}
+
 	public String getBairro() {
 		return bairro;
 	}
