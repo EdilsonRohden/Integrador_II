@@ -44,7 +44,7 @@ public class ContaDao extends Dao{
 		try {
 			
 			Statement stmt = connection.createStatement();
-			String sql = "SELECT conta.* FROM primeiro_nivel LEFT JOIN conta ON conta.id_primeiro_nivel = primeiro_nivel.id";
+			String sql = "SELECT conta.*, primeiro_nivel.descricao AS descricaoP FROM primeiro_nivel LEFT JOIN conta ON conta.id_primeiro_nivel = primeiro_nivel.id";
 			
 			ResultSet resultSet = stmt.executeQuery(sql);
 			if(resultSet != null) {
@@ -53,7 +53,7 @@ public class ContaDao extends Dao{
 							resultSet.getInt("id_conta"),
 							resultSet.getInt("id_primeiro_nivel"),
 							resultSet.getInt("id_segundo_nivel"),
-							"",
+							resultSet.getString("descricaoP"),
 							resultSet.getString("descricao")
 							));
 				}

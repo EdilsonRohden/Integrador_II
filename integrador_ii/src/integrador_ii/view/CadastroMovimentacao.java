@@ -60,7 +60,8 @@ public class CadastroMovimentacao extends JInternalFrame {
 		List<Conta> contas = contaService.getContas();
 		
 		for (Conta conta : contas) {
-			modelConta.addElement(conta.getId()+ "/ " +conta.getIdP()+"."+conta.getIdS()+" - "+conta.getDescricaoS());
+			modelConta.addElement(conta.getId()+ "/ " +conta.getIdP()+ "-" + conta.getDescricaoP()  
+					+ "."+conta.getIdS()+" - "+conta.getDescricaoS());
 		}
 		
 		JLabel lblCliente = new JLabel("Cliente:");

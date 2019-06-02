@@ -65,7 +65,7 @@ public class TelaPrincipal extends JFrame {
 					contentPane.add(telaUsuario);
 					telaUsuario.setVisible(true);					
 				}else {
-					JOptionPane.showMessageDialog(contentPane, "Você ó plebe, não tem acesso a tal área do sistema.");
+					JOptionPane.showMessageDialog(contentPane, "Você ó plebe, não tem acesso a tal área do sistema, ponha-te em teu lugar.");
 				}
 			}
 		});
