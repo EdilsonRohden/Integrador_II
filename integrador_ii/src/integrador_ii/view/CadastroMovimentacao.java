@@ -82,7 +82,7 @@ public class CadastroMovimentacao extends JInternalFrame {
 		getContentPane().add(txrIdCliente);
 		txrIdCliente.setColumns(10);
 		
-		JComboBox comboBoxCliente = new JComboBox();
+		JComboBox<String> comboBoxCliente = new JComboBox<String>();
 		comboBoxCliente.setBounds(183, 3, 157, 24);
 		comboBoxCliente.setModel(modelCliente);
 		getContentPane().add(comboBoxCliente);
@@ -138,7 +138,7 @@ public class CadastroMovimentacao extends JInternalFrame {
 		lblConta.setBounds(12, 39, 66, 15);
 		getContentPane().add(lblConta);
 		
-		JComboBox comboBoxConta = new JComboBox();
+		JComboBox<String> comboBoxConta = new JComboBox<String>();
 		comboBoxConta.setBounds(96, 34, 244, 24);
 		comboBoxConta.setModel(modelConta);
 		getContentPane().add(comboBoxConta);

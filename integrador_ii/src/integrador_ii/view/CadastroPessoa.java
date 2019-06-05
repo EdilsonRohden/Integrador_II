@@ -46,7 +46,7 @@ public class CadastroPessoa extends JInternalFrame {
 		lblCidade.setBounds(12, 68, 66, 15);
 		getContentPane().add(lblCidade);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(96, 63, 169, 20);
 		
 		CidadeService cidadeService = new CidadeService();

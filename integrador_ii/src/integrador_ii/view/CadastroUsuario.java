@@ -97,7 +97,7 @@ public class CadastroUsuario extends JInternalFrame {
 		getContentPane().add(txtIdPessoa);
 		txtIdPessoa.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {

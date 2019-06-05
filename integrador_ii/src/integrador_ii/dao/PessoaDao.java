@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import integrador_ii.models.Cidade;
-import integrador_ii.models.Cliente;
 import integrador_ii.models.Pessoa;
 
 public class PessoaDao extends Dao {

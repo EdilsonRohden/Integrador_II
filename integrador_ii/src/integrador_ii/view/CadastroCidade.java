@@ -61,7 +61,7 @@ public class CadastroCidade extends JInternalFrame {
 		getContentPane().add(txtCdIbge);
 		txtCdIbge.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(113, 67, 124, 19);
 		CidadeService cidadeService = new CidadeService();
 		model = cidadeService.getSiglas();

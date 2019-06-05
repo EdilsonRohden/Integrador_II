@@ -57,7 +57,7 @@ public class CadastroConta extends JInternalFrame {
 		lblSegundoNivel.setBounds(12, 73, 106, 15);
 		getContentPane().add(lblSegundoNivel);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(136, 37, 261, 20);
 		comboBox.setModel(model);
 		getContentPane().add(comboBox);

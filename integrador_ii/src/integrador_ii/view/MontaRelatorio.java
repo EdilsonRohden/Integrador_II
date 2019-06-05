@@ -16,7 +16,6 @@ import integrador_ii.services.ClienteService;
 import integrador_ii.services.PlanoDeContaService;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -70,7 +69,7 @@ public class MontaRelatorio extends JInternalFrame {
 		lblDataFin.setBounds(12, 109, 81, 15);
 		getContentPane().add(lblDataFin);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(113, 7, 219, 24);
 		
 		List<Cliente> clientes = clienteService.getClientes();
