@@ -125,6 +125,13 @@ public class TelaPrincipal extends JFrame {
 		menuBar.add(mnRelatrios);
 		
 		JMenuItem mntmPlanoDeContas = new JMenuItem("Plano de Contas");
+		mntmPlanoDeContas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MontaRelatorio telaMontaRelatorio = new MontaRelatorio(contentPane);
+				contentPane.add(telaMontaRelatorio);
+				telaMontaRelatorio.setVisible(true);
+			}
+		});
 		mnRelatrios.add(mntmPlanoDeContas);
 		
 		JMenu mnLogoff = new JMenu("Logoff");
