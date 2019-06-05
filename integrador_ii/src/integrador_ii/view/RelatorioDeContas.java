@@ -58,5 +58,6 @@ public class RelatorioDeContas extends JInternalFrame {
 		
 
 	}
-	public RelatorioDeContas() {}
+	public RelatorioDeContas() {
+		setClosable(true);}
 }
