@@ -81,7 +81,7 @@ public class MontaRelatorio extends JInternalFrame {
 		comboBox.setModel(model);
 		getContentPane().add(comboBox);
 		
-		JButton btnVerificar = new JButton("Verificar");
+		JButton btnVerificar = new JButton("Gerar Relatório");
 		btnVerificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {

@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import integrador_ii.services.CidadeService;
@@ -16,17 +17,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CadastroPessoa extends JInternalFrame {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1439244902409942071L;
 	private JTextField txtNome;
 	private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 	private JTextField txtId;
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -39,10 +33,6 @@ public class CadastroPessoa extends JInternalFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 	public CadastroPessoa() {
 		setTitle("Cadastro Pessoa");
 		setBounds(100, 100, 294, 198);
@@ -73,10 +63,20 @@ public class CadastroPessoa extends JInternalFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Integer codIbge = Integer.parseInt(model.getSelectedItem().toString().split("-")[0]);
-				PessoaService pessoaService = new PessoaService();
-				pessoaService.salvar(txtNome.getText(), txtId.getText(), codIbge);
-				dispose();
+
+				try {
+					if(txtNome.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "Dados invalidos!");
+					}else {
+						Integer codIbge = Integer.parseInt(model.getSelectedItem().toString().split("-")[0]);
+						PessoaService pessoaService = new PessoaService();
+						pessoaService.salvar(txtNome.getText(), txtId.getText(), codIbge);
+						dispose();						
+					}
+				} catch (Exception e) {
+
+				}
+				
 			}
 		});
 		btnSalvar.setBounds(12, 119, 114, 25);

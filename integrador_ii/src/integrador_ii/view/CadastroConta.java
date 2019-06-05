@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
@@ -14,7 +15,6 @@ import integrador_ii.services.ContaService;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -89,9 +89,12 @@ public class CadastroConta extends JInternalFrame {
 				String idS = txtIdS.getText();
 				String descricaoS = txtDescricaoS.getText();
 				
-				contaService.salvar(id, idP, idS, descricaoS);
-				
-				dispose();
+				if(id.isEmpty() || idP.isEmpty() || idS.isEmpty() || descricaoS.isEmpty()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Dados invalidos!");
+				}else {					
+					contaService.salvar(id, idP, idS, descricaoS);
+					dispose();
+				}
 				
 			}
 		});

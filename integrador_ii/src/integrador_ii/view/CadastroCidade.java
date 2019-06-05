@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import integrador_ii.dao.CidadeDao;
 import integrador_ii.services.CidadeService;
 
 import javax.swing.JComboBox;
@@ -17,13 +16,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CadastroCidade extends JInternalFrame {
+	private static final long serialVersionUID = 5973703882264062329L;
 	private JTextField txtNome;
 	private JTextField txtCdIbge;
 	private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,9 +34,6 @@ public class CadastroCidade extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public CadastroCidade() {
 		setTitle("Cadastro de Cidade");
 		setBounds(100, 100, 280, 177);

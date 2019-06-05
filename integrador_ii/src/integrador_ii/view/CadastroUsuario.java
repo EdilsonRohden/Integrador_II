@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import integrador_ii.models.Pessoa;
-import integrador_ii.models.Usuario;
 import integrador_ii.services.PessoaService;
 import integrador_ii.services.Usuarioservice;
 
@@ -20,8 +19,6 @@ import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -71,8 +68,6 @@ public class CadastroUsuario extends JInternalFrame {
 				
 				if (login.isEmpty() || !(senha1.equals(senha2)) || id == null) {
 					JOptionPane.showMessageDialog(getContentPane(), "Dados invalidos!");
-					
-					return;
 				}else {
 					usuarioService.salvar(id, login, senha1, adm);
 					dispose();

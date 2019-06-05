@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import integrador_ii.models.Cliente;
@@ -113,12 +114,11 @@ public class CadastroMovimentacao extends JInternalFrame {
 						}
 					}
 					mvService.salvar(new Cliente(idCliente), new Movimento(idConta, dataMovimento, valor, descricao));
-					
+					dispose();
 					
 				}catch (Exception e) {
+					JOptionPane.showMessageDialog(getContentPane(), "Dados invalidos!");
 					e.printStackTrace();
-				}finally {
-					dispose();
 				}
 			}
 		});

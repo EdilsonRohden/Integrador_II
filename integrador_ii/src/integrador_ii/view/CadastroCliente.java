@@ -4,9 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
-import org.postgresql.ssl.DefaultJavaSSLFactory;
 
 import integrador_ii.models.Pessoa;
 import integrador_ii.services.ClienteService;
@@ -18,15 +17,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class CadastroCliente extends JInternalFrame {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 9017093165608855941L;
 	private JTextField txtIdPessoa;
 	private JTextField txtBairro;
@@ -34,10 +28,6 @@ public class CadastroCliente extends JInternalFrame {
 	private JTextField txtTelefone;
 	private JTextField txtEmail;
 	private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -50,10 +40,6 @@ public class CadastroCliente extends JInternalFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 	public CadastroCliente() {
 		setTitle("Cadastro de Clientes");
 		setBounds(100, 100, 379, 241);
@@ -130,18 +116,24 @@ public class CadastroCliente extends JInternalFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				String idpessoa = txtIdPessoa.getText();
-				String bairro = txtBairro.getText();
-				String cep = txtCep.getText();
-				String fone = txtTelefone.getText();
-				String email = txtEmail.getText();
-				
-				ClienteService clienteService = new ClienteService();
-				clienteService.salvar(idpessoa, bairro, cep, fone, email);
-				dispose();
-				
-				
+				try {
+					String idpessoa = txtIdPessoa.getText();
+					String bairro = txtBairro.getText();
+					String cep = txtCep.getText();
+					String fone = txtTelefone.getText();
+					String email = txtEmail.getText();
+					
+					if(idpessoa.isEmpty() || bairro.isEmpty() || cep.isEmpty() || fone.isEmpty() || email.isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "Dados invalidos!");
+					}else {
+						ClienteService clienteService = new ClienteService();
+						clienteService.salvar(idpessoa, bairro, cep, fone, email);
+						dispose();						
+					}
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		btnSalvar.setBounds(12, 169, 114, 25);
