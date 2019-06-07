@@ -10,47 +10,42 @@ import integrador_ii.models.PlanoDeConta;
 public class RelatorioContasDao extends Dao{
 	
 	
-	private	final String PLANO_DE_CONTAS = "SELECT p.id || '.' || p.descricao AS tipo_de_conta, SUM(m.valor_movimentacao) AS totalizadores\n" + 
+	private	final String PLANO_DE_CONTAS = "SELECT tipo_de_conta, totalizadores FROM (\n" + 
+			"SELECT p.id || '.' || p.descricao AS tipo_de_conta, SUM(m.valor_movimentacao) AS totalizadores,\n" + 
+			"	p.id AS p, 0 AS s, 0 AS m \n" + 
 			"FROM \n" + 
-			"	(SELECT * FROM primeiro_nivel WHERE id = 1) AS p \n" + 
+			"	primeiro_nivel p \n" + 
 			"	JOIN \n" + 
 			"	conta c\n" + 
 			"	ON p.id = c.id_primeiro_nivel\n" + 
 			"	JOIN\n" + 
 			"	(SELECT * FROM movimentacao WHERE id_pessoa = ? AND data_movimentacao BETWEEN ? AND ?) AS m \n" + 
 			"	ON m.id_conta = c.id_conta\n" + 
-			"GROUP BY 1\n" + 
+			"GROUP BY 3, 4,5 \n" + 
 			"\n" + 
-			"UNION ALL\n" + 
+			"UNION\n" + 
 			"\n" + 
-			"SELECT c.id_primeiro_nivel || '.' || c.id_segundo_nivel || ' ' || c.descricao AS tipo_de_conta, SUM(m.valor_movimentacao) AS totalizadores\n" + 
+			"SELECT c.id_primeiro_nivel || '.' || c.id_segundo_nivel || ' ' || c.descricao AS tipo_de_conta, SUM(m.valor_movimentacao) AS totalizadores, \n" + 
+			"	c.id_primeiro_nivel AS p, c.id_segundo_nivel AS s, 0 AS m\n" + 
 			"FROM \n" + 
-			"	(SELECT * FROM conta WHERE id_primeiro_nivel = 1) AS c \n" + 
+			"	conta c \n" + 
 			"	JOIN \n" + 
 			"	(SELECT * FROM movimentacao WHERE id_pessoa = ? AND data_movimentacao BETWEEN ? AND ?) AS m \n" + 
 			"	ON c.id_conta = m.id_conta\n" + 
-			"GROUP BY 1\n" + 
+			"GROUP BY 1,3, 4, 5\n" + 
 			"\n" + 
-			"UNION ALL\n" + 
+			"UNION\n" + 
 			"\n" + 
-			"SELECT p.id || '.' || p.descricao AS tipo_de_conta, SUM(m.valor_movimentacao) AS totalizadores\n" + 
+			"SELECT c.id_primeiro_nivel || '.' || c.id_segundo_nivel || '.' || m.id_movimentacao || ' ' || m.descricao AS tipo_de_conta, m.valor_movimentacao AS totalizadores,\n" + 
+			"	c.id_primeiro_nivel AS p, c.id_segundo_nivel AS s, m.id_movimentacao AS m\n" + 
 			"FROM \n" + 
-			"	(SELECT * FROM primeiro_nivel WHERE id = 2) AS p \n" + 
-			"	JOIN conta c ON p.id = c.id_primeiro_nivel\n" + 
-			"JOIN \n" + 
-			"	(SELECT * FROM movimentacao WHERE id_pessoa = ? AND data_movimentacao BETWEEN ? AND ?) AS m \n" + 
-			"	ON m.id_conta = c.id_conta\n" + 
-			"GROUP BY 1\n" + 
-			"\n" + 
-			"UNION ALL\n" + 
-			"\n" + 
-			"SELECT c.id_primeiro_nivel || '.' || c.id_segundo_nivel || ' ' || c.descricao AS tipo_de_conta, SUM(m.valor_movimentacao) AS totalizadores\n" + 
-			"FROM \n" + 
-			"	(SELECT * FROM conta WHERE id_primeiro_nivel = 2) AS c \n" + 
+			"	conta c \n" + 
 			"	JOIN \n" + 
 			"	(SELECT * FROM movimentacao WHERE id_pessoa = ? AND data_movimentacao BETWEEN ? AND ?) AS m \n" + 
 			"	ON c.id_conta = m.id_conta\n" + 
-			"GROUP BY 1\n"; 
+			"ORDER BY 1, 2, 4, 5\n" + 
+			") AS t1\n" + 
+			"ORDER BY p, s, m\n"; 
 	
 	
 	public ArrayList<PlanoDeConta> getRelatorio(int idCliente, Date dataIni, Date dataFin) {
@@ -73,10 +68,6 @@ public class RelatorioContasDao extends Dao{
 			ps.setInt(7, idCliente);
 			ps.setDate(8, dataIni);
 			ps.setDate(9, dataFin);
-			ps.setInt(10, idCliente);
-			ps.setDate(11, dataIni);
-			ps.setDate(12, dataFin);
-
 			
 			ResultSet resultSet = ps.executeQuery();
 			
