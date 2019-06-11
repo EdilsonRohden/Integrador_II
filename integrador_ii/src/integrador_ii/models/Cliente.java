@@ -8,6 +8,7 @@ public class Cliente extends Pessoa{
 	private String cep;
 	private String fone;
 	private String email;
+	private boolean excluido;
 	private List<Movimento> movimentacoes;
 	
 	public Cliente() {}
@@ -49,6 +50,14 @@ public class Cliente extends Pessoa{
 	}
 	public void setMovimentacoes(List<Movimento> movimentacoes) {
 		this.movimentacoes = movimentacoes;
+	}
+
+	public void setExcluido(boolean excluido) {
+		this.excluido = excluido;
+	}
+	
+	public boolean isExcluido() {
+		return this.excluido;
 	}
 	
 }

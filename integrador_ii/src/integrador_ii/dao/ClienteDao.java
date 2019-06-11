@@ -50,16 +50,18 @@ public class ClienteDao extends Dao{
 		
 		try {
 			
-			Statement stmt = connection.createStatement();
+			String sql = "UPDATE cliente SET bairro=?, cep=?, fone=?, email=?, excluido=? WHERE id_pessoa = ?";
 			
-			String sql = "UPDATE cliente SET " + 
-					"bairro = '" + cliente.getBairro() +
-					"', cep = '" + cliente.getCep() +
-					"', fone = '" + cliente.getFone() +
-					"', email = '" + cliente.getEmail() + 
-					"' WHERE id_pessoa = " + cliente.getId() + ";";
+			PreparedStatement ps = connection.prepareStatement(sql);
 			
-			stmt.execute(sql);
+			ps.setString(1, cliente.getBairro());
+			ps.setString(2, cliente.getCep());
+			ps.setString(3, cliente.getFone());
+			ps.setString(4, cliente.getEmail());
+			ps.setBoolean(5, cliente.isExcluido());
+			ps.setInt(6, cliente.getId());
+					
+			ps.execute();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -101,7 +103,7 @@ public class ClienteDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "SELECT * FROM cliente JOIN pessoa ON pessoa.id_pessoa = cliente.id_pessoa ";
+			String sql = "SELECT * FROM cliente JOIN pessoa ON pessoa.id_pessoa = cliente.id_pessoa WHERE excluido = false ";
 			
 			ResultSet resultSet = stmt.executeQuery(sql);
 			

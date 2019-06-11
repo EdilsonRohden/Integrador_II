@@ -9,7 +9,7 @@ import integrador_ii.models.Pessoa;
 
 public class ClienteService {
 
-	public void salvar(String idPessoa, String bairro, String cep, String fone, String email) {
+	public void salvar(String idPessoa, String bairro, String cep, String fone, String email, boolean excluido) {
 		PessoaDao pessoadao = new PessoaDao();
 		ClienteDao clienteDao = new ClienteDao();
 				
@@ -20,6 +20,7 @@ public class ClienteService {
 		cliente.setCep(cep);
 		cliente.setFone(fone);
 		cliente.setEmail(email);
+		cliente.setExcluido(excluido);
 		if (clienteDao.getClienteById(cliente) != null) {
 			clienteDao.update(cliente);
 		}else {			

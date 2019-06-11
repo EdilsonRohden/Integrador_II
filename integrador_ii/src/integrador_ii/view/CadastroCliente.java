@@ -19,6 +19,9 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JCheckBox;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class CadastroCliente extends JInternalFrame {
 	private static final long serialVersionUID = 9017093165608855941L;
@@ -42,7 +45,7 @@ public class CadastroCliente extends JInternalFrame {
 	}
 	public CadastroCliente() {
 		setTitle("Cadastro de Clientes");
-		setBounds(100, 100, 379, 241);
+		setBounds(100, 100, 377, 259);
 		getContentPane().setLayout(null);
 		
 		PessoaService pessoaService = new PessoaService();
@@ -98,6 +101,15 @@ public class CadastroCliente extends JInternalFrame {
 		getContentPane().add(txtBairro);
 		txtBairro.setColumns(10);
 		
+		JCheckBox chckbxAtivo = new JCheckBox("Ativo");
+		if(!TelaPrincipal.usuario.isAdm()) {
+			chckbxAtivo.setEnabled(false);			
+		}
+		chckbxAtivo.setSelected(true);
+		chckbxAtivo.setBounds(12, 144, 126, 23);
+		getContentPane().add(chckbxAtivo);
+
+		
 		txtCep = new JTextField();
 		txtCep.setBounds(113, 64, 237, 19);
 		getContentPane().add(txtCep);
@@ -127,7 +139,7 @@ public class CadastroCliente extends JInternalFrame {
 						JOptionPane.showMessageDialog(getContentPane(), "Dados invalidos!");
 					}else {
 						ClienteService clienteService = new ClienteService();
-						clienteService.salvar(idpessoa, bairro, cep, fone, email);
+						clienteService.salvar(idpessoa, bairro, cep, fone, email, !chckbxAtivo.isSelected());
 						dispose();						
 					}
 					
@@ -136,7 +148,7 @@ public class CadastroCliente extends JInternalFrame {
 				}
 			}
 		});
-		btnSalvar.setBounds(12, 169, 114, 25);
+		btnSalvar.setBounds(12, 190, 114, 25);
 		getContentPane().add(btnSalvar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -145,9 +157,8 @@ public class CadastroCliente extends JInternalFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(166, 169, 114, 25);
+		btnCancelar.setBounds(236, 190, 114, 25);
 		getContentPane().add(btnCancelar);
-
+		
 	}
-
 }
