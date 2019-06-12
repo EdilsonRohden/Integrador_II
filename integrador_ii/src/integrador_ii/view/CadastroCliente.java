@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import integrador_ii.models.Cliente;
 import integrador_ii.models.Pessoa;
 import integrador_ii.services.ClienteService;
 import integrador_ii.services.PessoaService;
@@ -22,6 +23,8 @@ import java.awt.event.FocusEvent;
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CadastroCliente extends JInternalFrame {
 	private static final long serialVersionUID = 9017093165608855941L;
@@ -55,10 +58,6 @@ public class CadastroCliente extends JInternalFrame {
 		lblPessoa.setBounds(12, 12, 66, 15);
 		getContentPane().add(lblPessoa);
 		
-		txtIdPessoa = new JTextField();
-		txtIdPessoa.setBounds(113, 10, 66, 19);
-		getContentPane().add(txtIdPessoa);
-		txtIdPessoa.setColumns(10);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.addFocusListener(new FocusAdapter() {
@@ -124,6 +123,32 @@ public class CadastroCliente extends JInternalFrame {
 		txtEmail.setBounds(113, 119, 237, 19);
 		getContentPane().add(txtEmail);
 		txtEmail.setColumns(10);
+
+		txtIdPessoa = new JTextField();
+		txtIdPessoa.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(!txtIdPessoa.getText().isEmpty()) {
+					try {
+						Integer id = Integer.parseInt(txtIdPessoa.getText());
+						ClienteService clienteService = new ClienteService();
+						Cliente cliente = clienteService.getCliente(id);
+						if (cliente != null) {
+							txtBairro.setText(cliente.getBairro());
+							txtCep.setText(cliente.getCep());
+							txtTelefone.setText(cliente.getFone());
+							txtEmail.setText(cliente.getEmail());
+							chckbxAtivo.setSelected(!cliente.isExcluido());
+						}
+					} catch (Exception ex) {
+						
+					}
+				}
+			}
+		});
+		txtIdPessoa.setBounds(113, 10, 66, 19);
+		getContentPane().add(txtIdPessoa);
+		txtIdPessoa.setColumns(10);
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {

@@ -8,8 +8,9 @@ import integrador_ii.models.Pessoa;
 
 public class PessoaService {
 
+	private PessoaDao pessoaDao = new PessoaDao();
+	
 	public void salvar(String nome, String id, Integer codIbge) {
-		PessoaDao pessoaDao = new PessoaDao();
 		Pessoa pessoa = null;
 		if(!id.isEmpty()) {			
 			Integer idPessoa = Integer.parseInt(id);
@@ -27,11 +28,17 @@ public class PessoaService {
 	}
 
 	public List<Pessoa> getPessoas() {
-		PessoaDao pessoaDao = new PessoaDao();
 		
 		List<Pessoa> pessoas = pessoaDao.getPessoas();
 		
 		return pessoas;
+	}
+
+	public Pessoa getPessoa(Integer id) {
+		
+		Pessoa pessoa = pessoaDao.getPessoaById(new Pessoa(id));
+		
+		return pessoa;
 	}
 
 }

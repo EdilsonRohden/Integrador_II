@@ -31,6 +31,7 @@ public class ClienteDao extends Dao{
 					result_cliente.setCep(result.getString("cep"));
 					result_cliente.setFone(result.getString("fone"));
 					result_cliente.setEmail(result.getString("email"));
+					result_cliente.setExcluido(result.getBoolean("excluido"));
 				}
 			}
 			

@@ -9,8 +9,11 @@ import integrador_ii.models.Pessoa;
 
 public class ClienteService {
 
+	private PessoaDao pessoadao = new PessoaDao();
+	private ClienteDao clienteDao = new ClienteDao();
+	
 	public void salvar(String idPessoa, String bairro, String cep, String fone, String email, boolean excluido) {
-		PessoaDao pessoadao = new PessoaDao();
+		
 		ClienteDao clienteDao = new ClienteDao();
 				
 		Pessoa pessoa = pessoadao.getPessoaById(new Pessoa(Integer.parseInt(idPessoa)));
@@ -31,12 +34,17 @@ public class ClienteService {
 
 	public List<Cliente> getClientes() {
 		
-		ClienteDao clienteDao = new ClienteDao();
-		
 		List<Cliente> clientes = clienteDao.getClientes();
 		
 		
 		return clientes;
+	}
+
+	public Cliente getCliente(Integer id) {
+		
+		Cliente cliente = clienteDao.getClienteById(new Cliente(id));
+		
+		return cliente;
 	}
 
 }
