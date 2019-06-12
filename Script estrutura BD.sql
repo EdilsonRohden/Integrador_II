@@ -29,7 +29,7 @@ CREATE TABLE cliente (
 	bairro VARCHAR(70),
 	cep VARCHAR(10),
 	fone VARCHAR(15),
-	email VARCHAR(70),
+	email VARCHAR(70)
 	excluido BOOLEAN DEFAULT FALSE
 );
 
@@ -66,7 +66,6 @@ CREATE TABLE movimento_alteracao (
 INSERT INTO primeiro_nivel (id, descricao) VALUES
 (1, 'Crédito'),
 (2, 'Débito');
-
 
 
 
