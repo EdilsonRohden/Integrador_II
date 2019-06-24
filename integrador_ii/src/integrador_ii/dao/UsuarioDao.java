@@ -98,13 +98,14 @@ public class UsuarioDao extends Dao{
 			
 			Statement stmt = connection.createStatement();
 			
-			String sql = "SELECT * FROM usuario WHERE id_pessoa = " + user.getId();
+			String sql = "SELECT * FROM usuario JOIN pessoa ON usuario.id_pessoa = pessoa.id_pessoa WHERE  usuario.id_pessoa = " + user.getId();
 			
 			ResultSet result = stmt.executeQuery(sql);
 			
 			if (result != null) {
 				if(result.next()) {					
 					usuario = new Usuario(user.getId());
+					usuario.setNome(result.getString("nome"));
 					usuario.setAdm(result.getBoolean("adm"));
 					usuario.setLogin(result.getString("login"));
 					usuario.setSenha(result.getString("senha"));

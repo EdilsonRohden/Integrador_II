@@ -8,12 +8,12 @@ import integrador_ii.dao.UsuarioDao;
 import integrador_ii.models.Pessoa;
 import integrador_ii.models.Usuario;
 
-public class Usuarioservice {
+public class UsuarioService {
+	
+	private UsuarioDao usuarioDao = new UsuarioDao();
+	private PessoaDao pessoaDao = new PessoaDao();
 
 	public List<Usuario> getUsuarios() {
-		
-		UsuarioDao usuarioDao = new UsuarioDao();
-		PessoaDao pessoaDao = new PessoaDao();
 		
 		List<Usuario> usuarios = usuarioDao.getUsuarios();
 		List<Usuario> usuariosCompletos = new ArrayList<Usuario>();
@@ -29,8 +29,6 @@ public class Usuarioservice {
 
 	public void salvar(Integer id, String login, String senha, boolean adm) {
 		
-		UsuarioDao usuarioDao = new UsuarioDao();
-		
 		Usuario usuario = new Usuario(id, login, senha, adm);
 		
 		if(usuarioDao.getUsuarioById(usuario) != null) {
@@ -39,6 +37,14 @@ public class Usuarioservice {
 			usuarioDao.salvar(usuario);			
 		}
 			
+	}
+
+	public Usuario getUsuarioById(Integer id) {
+		Usuario usuario = null;
+		
+		usuario = usuarioDao.getUsuarioById(new Usuario(id));
+		
+		return usuario;
 	}
 
 }

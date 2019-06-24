@@ -104,7 +104,7 @@ public class MontaRelatorio extends JInternalFrame {
 				}
 			}
 		});
-		btnVerificar.setBounds(12, 174, 114, 25);
+		btnVerificar.setBounds(12, 174, 140, 25);
 		getContentPane().add(btnVerificar);
 		
 		JButton btnCancelar = new JButton("Cancelar");

@@ -10,17 +10,21 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import integrador_ii.models.Pessoa;
+import integrador_ii.models.Usuario;
 import integrador_ii.services.PessoaService;
-import integrador_ii.services.Usuarioservice;
+import integrador_ii.services.UsuarioService;
 
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CadastroUsuario extends JInternalFrame {
 	private static final long serialVersionUID = 2865229064350768750L;
@@ -48,7 +52,7 @@ public class CadastroUsuario extends JInternalFrame {
 		setBounds(100, 100, 385, 277);
 		getContentPane().setLayout(null);
 		
-		Usuarioservice usuarioService = new Usuarioservice();
+		UsuarioService usuarioService = new UsuarioService();
 		PessoaService pessoaService = new PessoaService();
 		List<Pessoa> pessoas = pessoaService.getPessoas();
 		
@@ -93,6 +97,29 @@ public class CadastroUsuario extends JInternalFrame {
 		getContentPane().add(lblPessoa);
 		
 		txtIdPessoa = new JTextField();
+		txtIdPessoa.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				try {
+					
+					Integer id = Integer.parseInt(txtIdPessoa.getText());
+					Usuario usuario = usuarioService.getUsuarioById(id);
+					
+					if(usuario != null) {
+						for (int i = 0; i < model.getSize(); i++) {
+							if(model.getElementAt(i).toString().equals(usuario.getNome())) {
+								model.setSelectedItem(model.getElementAt(i));
+								break;
+							}
+						}
+						chckbxAdm.setSelected(usuario.isAdm());
+					}
+					
+				} catch (Exception ex) {
+
+				}
+			}
+		});
 		txtIdPessoa.setBounds(156, 5, 65, 22);
 		getContentPane().add(txtIdPessoa);
 		txtIdPessoa.setColumns(10);

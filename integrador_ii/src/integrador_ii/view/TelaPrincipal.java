@@ -121,8 +121,8 @@ public class TelaPrincipal extends JFrame {
 		});
 		mnCadastros.add(mntmPessoas);
 		
-		JMenu mnRelatrios = new JMenu("Relatórios");
-		menuBar.add(mnRelatrios);
+		JMenu mnRelatorios = new JMenu("Relatórios");
+		menuBar.add(mnRelatorios);
 		
 		JMenuItem mntmPlanoDeContas = new JMenuItem("Plano de Contas");
 		mntmPlanoDeContas.addActionListener(new ActionListener() {
@@ -132,7 +132,21 @@ public class TelaPrincipal extends JFrame {
 				telaMontaRelatorio.setVisible(true);
 			}
 		});
-		mnRelatrios.add(mntmPlanoDeContas);
+		
+		if(TelaPrincipal.usuario.isAdm()) {
+
+			JMenuItem mntmMovimentoAlterao = new JMenuItem("Movimento Alteração");
+			mntmMovimentoAlterao.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					
+					
+				}
+			});
+			mnRelatorios.add(mntmMovimentoAlterao);
+			
+		}
+		mnRelatorios.add(mntmPlanoDeContas);
 		
 		JMenu mnLogoff = new JMenu("Logoff");
 		mnLogoff.addActionListener(new ActionListener() {

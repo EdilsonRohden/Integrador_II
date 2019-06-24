@@ -94,7 +94,7 @@ public class Login extends JFrame {
 		contentPane.add(txtPassword);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/home/edislon/Imagens/voMataSpliter.jpeg"));
+		label.setIcon(new ImageIcon(""));
 		label.setBounds(281, 12, 202, 199);
 		contentPane.add(label);
 	}
