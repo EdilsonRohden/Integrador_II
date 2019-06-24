@@ -1,6 +1,7 @@
 package integrador_ii.models;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Movimento {
@@ -10,7 +11,7 @@ public class Movimento {
 	private Date dataMovimento;
 	private Double valor;
 	private String descricao;
-	private List<MovimentoAlteracao> alteracoes;
+	private List<MovimentoAlteracao> alteracoes = new ArrayList<MovimentoAlteracao>();
 	
 	public Movimento(Cliente cliente, Conta conta, int id, Date dataMovimento, double valor) {
 		this.conta = conta;
@@ -26,6 +27,8 @@ public class Movimento {
 		this.descricao = descricao;
 		
 	}
+
+	public Movimento() {}
 
 	public String getDescricao() {
 		return descricao;
@@ -62,6 +65,14 @@ public class Movimento {
 	}
 	public void setAlteracoes(List<MovimentoAlteracao> alteracoes) {
 		this.alteracoes = alteracoes;
+	}
+
+	public void addMovimentoAlteracao(MovimentoAlteracao mvAlt) {
+		this.alteracoes.add(mvAlt);
+	}
+
+	public MovimentoAlteracao getAlteracaoAt(int i) {
+		return this.alteracoes.get(i);
 	}
 	
 }

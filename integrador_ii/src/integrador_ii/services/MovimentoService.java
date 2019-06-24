@@ -28,4 +28,32 @@ public class MovimentoService {
 		
 	}
 
+	public List<Movimento> relatorioMovimentacao(String idMovimentacao, Integer idUsuario) {
+
+		
+		if( !idMovimentacao.isEmpty() && idUsuario != null ) {
+			try {
+				int idMov = Integer.parseInt(idMovimentacao);
+				return movimentoDao.getRelatorio(idMov, idUsuario);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if( !idMovimentacao.isEmpty() && idUsuario == null ) {
+			try {
+				int idMov = Integer.parseInt(idMovimentacao);
+				return movimentoDao.getRelatorio(idMov);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if( idMovimentacao.isEmpty() && idUsuario != null ) {
+			try {
+				return movimentoDao.getRelatorio(idUsuario);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} 
+		
+		return movimentoDao.getRelatorio();
+	}
+
 }

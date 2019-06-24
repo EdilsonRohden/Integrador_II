@@ -139,7 +139,9 @@ public class TelaPrincipal extends JFrame {
 			mntmMovimentoAlterao.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					
+					MontaRelatorioMovimentoAlteracao mvAlt = new MontaRelatorioMovimentoAlteracao(getContentPane());
+					getContentPane().add(mvAlt);
+					mvAlt.setVisible(true);
 					
 				}
 			});
@@ -149,11 +151,6 @@ public class TelaPrincipal extends JFrame {
 		mnRelatorios.add(mntmPlanoDeContas);
 		
 		JMenu mnLogoff = new JMenu("Logoff");
-		mnLogoff.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-			}
-		});
 		menuBar.add(mnLogoff);
 		
 		JMenuItem mntmLogoff = new JMenuItem("logoff");

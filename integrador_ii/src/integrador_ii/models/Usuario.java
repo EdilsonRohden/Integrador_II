@@ -18,6 +18,10 @@ public class Usuario extends Pessoa{
 		this.id = id;
 	}
 
+	public Usuario(String nome) {
+		this.nome = nome;
+	}
+
 	public String getLogin() {
 		return login;
 	}

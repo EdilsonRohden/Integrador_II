@@ -1,21 +1,22 @@
 package integrador_ii.view;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import integrador_ii.models.PlanoDeConta;
+import integrador_ii.models.Movimento;
 
-import javax.swing.JScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.Vector;
 
-public class RelatorioDeContas extends JInternalFrame {
-	private static final long serialVersionUID = -4150981096929907999L;
+public class RelatorioMovimentoAlteracao extends JInternalFrame {
+
+	private static final long serialVersionUID = -3209492029761228508L;
 	private JTable table;
 	private DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -23,7 +24,7 @@ public class RelatorioDeContas extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RelatorioDeContas frame = new RelatorioDeContas();
+					RelatorioMovimentoAlteracao frame = new RelatorioMovimentoAlteracao();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,8 +32,11 @@ public class RelatorioDeContas extends JInternalFrame {
 			}
 		});
 	}
-	public RelatorioDeContas(ArrayList<PlanoDeConta> dados) {
-		setBounds(100, 100, 901, 600);
+	
+	public RelatorioMovimentoAlteracao() {}
+
+	public RelatorioMovimentoAlteracao(List<Movimento> relatorio) {
+		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -41,31 +45,38 @@ public class RelatorioDeContas extends JInternalFrame {
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		table.setBounds(0, 0, 440, 268);
+		
+
+		
+		
 		Vector< Vector<String> > dataTable = new Vector<Vector<String>>();
-		for (PlanoDeConta planoDeConta : dados) {
+		for (Movimento movimento : relatorio) {
 			Vector<String> linha = new Vector<String>();
-			
-			linha.add(planoDeConta.getTipoConta());
-			linha.add(Double.toString(planoDeConta.getTotalizadores()));
+			linha.add(movimento.getAlteracaoAt(0).getTipo());
+			linha.add(movimento.getAlteracaoAt(0).getData().toString());
+			linha.add(movimento.getAlteracaoAt(0).getAutor().getNome());
+			linha.add(Double.toString(movimento.getValor()));
+			linha.add(movimento.getDataMovimento().toString());
 			dataTable.add(linha);
+			
 		}
 		
 		Vector<String> identificadorDeColunas = new Vector<String>();
-		identificadorDeColunas.add("Tipo de Conta");
-		identificadorDeColunas.add("Totalizadores");
+		identificadorDeColunas.add("Tipo de Alteração");
+		identificadorDeColunas.add("Data da Alteração");
+		identificadorDeColunas.add("Usuario Responsavel");
+		identificadorDeColunas.add("Valor do Movimento");
+		identificadorDeColunas.add("Data do Movimento");
 		
 		tableModel.setDataVector(dataTable, identificadorDeColunas);
-		
 		table.setModel(tableModel);
 		
-
-	}
-	public RelatorioDeContas() {
-		getContentPane().addKeyListener(new KeyAdapter() {
+		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				dispose();
 			}
 		});
-		setClosable(true);}
+	}
 }

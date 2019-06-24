@@ -11,6 +11,8 @@ import java.util.List;
 import integrador_ii.models.Cliente;
 import integrador_ii.models.Conta;
 import integrador_ii.models.Movimento;
+import integrador_ii.models.MovimentoAlteracao;
+import integrador_ii.models.Usuario;
 
 public class MovimentoDao extends Dao{
 
@@ -88,7 +90,208 @@ public class MovimentoDao extends Dao{
 		return id_movimentacao;
 	}
 
+	public List<Movimento> getRelatorio() {
+		
+		conectar();
+		List<Movimento> movimentos = new ArrayList<Movimento>();
+		
+		try {
+			String sql = "SELECT ma.tipo_alteracao, ma.data_alteracao, p.nome as usuario,\n" + 
+					"	m.valor_movimentacao, m.data_movimentacao\n" + 
+					"FROM \n" + 
+					"	movimento_alteracao ma JOIN movimentacao m \n" + 
+					"	ON ma.id_movimentacao = m.id_movimentacao\n" + 
+					"	JOIN pessoa p \n" + 
+					"	ON p.id_pessoa = ma.id_pessoa";
+			
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs != null) {
+				while( rs.next() ) {
+					
+					Movimento mv = new Movimento();
+					MovimentoAlteracao mvAlt = new MovimentoAlteracao();
+					mv.setDataMovimento(rs.getDate("data_movimentacao"));
+					mv.setValor(rs.getDouble("valor_movimentacao"));
+					mvAlt.setAutor(new Usuario(rs.getString("usuario")));
+					mvAlt.setData(rs.getDate("data_alteracao"));
+					mvAlt.setTipo(rs.getString("tipo_alteracao"));
+					
+					mv.addMovimentoAlteracao(mvAlt);
+					
+					movimentos.add(mv);
+					
+				}
+					
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			desconectar();
+		}
+		
+		return movimentos;
+	}
+
+	public List<Movimento> getRelatorio(int idMov, Integer idUsuario) {
+		
+		conectar();
+		List<Movimento> movimentos = new ArrayList<Movimento>();
+		
+		try {
+			String sql = "SELECT ma.tipo_alteracao, ma.data_alteracao, p.nome as usuario,\n" + 
+					"	m.valor_movimentacao, m.data_movimentacao\n" + 
+					"FROM \n" + 
+					"	movimento_alteracao ma JOIN movimentacao m \n" + 
+					"	ON ma.id_movimentacao = m.id_movimentacao\n" + 
+					"	JOIN pessoa p \n" + 
+					"	ON p.id_pessoa = ma.id_pessoa " +
+					"WHERE ma.id_pessoa = ? and\n" + 
+					"	m.id_movimentacao = ?";
+			
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ps.setInt(1, idUsuario);
+			ps.setInt(2, idMov);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs != null) {
+				while( rs.next() ) {
+					
+					Movimento mv = new Movimento();
+					MovimentoAlteracao mvAlt = new MovimentoAlteracao();
+					mv.setDataMovimento(rs.getDate("data_movimentacao"));
+					mv.setValor(rs.getDouble("valor_movimentacao"));
+					mvAlt.setAutor(new Usuario(rs.getString("usuario")));
+					mvAlt.setData(rs.getDate("data_alteracao"));
+					mvAlt.setTipo(rs.getString("tipo_alteracao"));
+					
+					mv.addMovimentoAlteracao(mvAlt);
+					
+					movimentos.add(mv);
+					
+				}
+					
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			desconectar();
+		}
+		
+		return movimentos;
+	}
+
+	public List<Movimento> getRelatorio(int idMov) {
+		
+		conectar();
+		List<Movimento> movimentos = new ArrayList<Movimento>();
+		
+		try {
+			String sql = "SELECT ma.tipo_alteracao, ma.data_alteracao, p.nome as usuario,\n" + 
+					"	m.valor_movimentacao, m.data_movimentacao\n" + 
+					"FROM \n" + 
+					"	movimento_alteracao ma JOIN movimentacao m \n" + 
+					"	ON ma.id_movimentacao = m.id_movimentacao\n" + 
+					"	JOIN pessoa p \n" + 
+					"	ON p.id_pessoa = ma.id_pessoa " +
+					"WHERE m.id_movimentacao = ?";
+			
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ps.setInt(1, idMov);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs != null) {
+				while( rs.next() ) {
+					
+					Movimento mv = new Movimento();
+					MovimentoAlteracao mvAlt = new MovimentoAlteracao();
+					mv.setDataMovimento(rs.getDate("data_movimentacao"));
+					mv.setValor(rs.getDouble("valor_movimentacao"));
+					mvAlt.setAutor(new Usuario(rs.getString("usuario")));
+					mvAlt.setData(rs.getDate("data_alteracao"));
+					mvAlt.setTipo(rs.getString("tipo_alteracao"));
+					
+					mv.addMovimentoAlteracao(mvAlt);
+					
+					movimentos.add(mv);
+					
+				}
+					
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			desconectar();
+		}
+		
+		return movimentos;
+	}
+	
+	public List<Movimento> getRelatorio(Integer idUsuario) {
+		
+		conectar();
+		List<Movimento> movimentos = new ArrayList<Movimento>();
+		
+		try {
+			String sql = "SELECT ma.tipo_alteracao, ma.data_alteracao, p.nome as usuario,\n" + 
+					"	m.valor_movimentacao, m.data_movimentacao\n" + 
+					"FROM \n" + 
+					"	movimento_alteracao ma JOIN movimentacao m \n" + 
+					"	ON ma.id_movimentacao = m.id_movimentacao\n" + 
+					"	JOIN pessoa p \n" + 
+					"	ON p.id_pessoa = ma.id_pessoa " +
+					"WHERE ma.id_pessoa = ?\n";
+			
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ps.setInt(1, idUsuario);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs != null) {
+				while( rs.next() ) {
+					
+					Movimento mv = new Movimento();
+					MovimentoAlteracao mvAlt = new MovimentoAlteracao();
+					mv.setDataMovimento(rs.getDate("data_movimentacao"));
+					mv.setValor(rs.getDouble("valor_movimentacao"));
+					mvAlt.setAutor(new Usuario(rs.getString("usuario")));
+					mvAlt.setData(rs.getDate("data_alteracao"));
+					mvAlt.setTipo(rs.getString("tipo_alteracao"));
+					
+					mv.addMovimentoAlteracao(mvAlt);
+					
+					movimentos.add(mv);
+					
+				}
+					
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			desconectar();
+		}
+		
+		return movimentos;
+	}
+	
 }
+
+
 
 
 
