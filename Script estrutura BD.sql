@@ -66,3 +66,18 @@ CREATE TABLE movimento_alteracao (
 INSERT INTO primeiro_nivel (id, descricao) VALUES
 (1, 'Crédito'),
 (2, 'Débito');
+
+INSERT INTO estado (uf, nome) VALUES ('SC', 'Santa Catarina');
+
+INSERT INTO cidade ( id_ibge, uf, nome ) VALUES ( 4204202, 'SC', 'Chapecó' );
+
+INSERT INTO pessoa (id_ibge, nome) VALUES ( 4204202, 'ADMIN' );
+
+INSERT INTO usuario ( id_pessoa, login, senha, adm ) VALUES ( 1, 'admin', 'admin', True );
+
+
+
+
+
+
+select * from pessoa

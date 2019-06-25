@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import integrador_ii.models.Pessoa;
 import integrador_ii.services.CidadeService;
 import integrador_ii.services.PessoaService;
 
@@ -15,12 +16,18 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CadastroPessoa extends JInternalFrame {
+	
 	private static final long serialVersionUID = -1439244902409942071L;
 	private JTextField txtNome;
 	private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 	private JTextField txtId;
+	private PessoaService pessoaService = new PessoaService();
+	private CidadeService cidadeService = new CidadeService();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -49,7 +56,7 @@ public class CadastroPessoa extends JInternalFrame {
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(96, 63, 169, 20);
 		
-		CidadeService cidadeService = new CidadeService();
+		cidadeService = new CidadeService();
 		model = cidadeService.getCidadesComboBox();
 		comboBox.setModel(model);
 		
@@ -69,7 +76,7 @@ public class CadastroPessoa extends JInternalFrame {
 						JOptionPane.showMessageDialog(getContentPane(), "Dados invalidos!");
 					}else {
 						Integer codIbge = Integer.parseInt(model.getSelectedItem().toString().split("-")[0]);
-						PessoaService pessoaService = new PessoaService();
+						pessoaService = new PessoaService();
 						pessoaService.salvar(txtNome.getText(), txtId.getText(), codIbge);
 						dispose();						
 					}
@@ -96,6 +103,27 @@ public class CadastroPessoa extends JInternalFrame {
 		getContentPane().add(lblId);
 		
 		txtId = new JTextField();
+		txtId.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(!txtId.getText().isEmpty()) {
+					try {
+						
+						int id = Integer.parseInt(txtId.getText());
+						
+						Pessoa pessoa = pessoaService.getPessoa(id);
+						if(pessoa != null) {
+							txtNome.setText(pessoa.getNome());
+							model.setSelectedItem(pessoa.getCidade().getNome() + "-" + pessoa.getCidade().getCodigoIbge());							
+						}
+						
+						
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 		txtId.setBounds(96, 12, 169, 19);
 		getContentPane().add(txtId);
 		txtId.setColumns(10);
