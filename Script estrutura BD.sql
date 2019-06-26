@@ -20,7 +20,7 @@ CREATE TABLE pessoa (
 CREATE TABLE usuario (
 	id_pessoa INTEGER PRIMARY KEY REFERENCES pessoa(id_pessoa),
 	login VARCHAR(100) NOT NULL,
-	senha VARCHAR(30) NOT NULL,
+	senha VARCHAR(32) NOT NULL,
 	adm BOOLEAN NOT NULL
 );
 
