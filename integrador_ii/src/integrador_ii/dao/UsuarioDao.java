@@ -15,16 +15,17 @@ public class UsuarioDao extends Dao{
 		conectar();
 		
 		try {
+
+			String sql = "UPDATE usuario SET login=?, senha=MD5(?), adm=? WHERE id_pessoa = ?";
 			
-			Statement stmt = connection.createStatement();
+			PreparedStatement ps = connection.prepareStatement(sql);
 			
-			String sql = "UPDATE usuario SET " +
-					"login = '" + usuario.getLogin() + "'," +
-					"senha = '" + usuario.getSenha() + "'," +
-					"adm = '" + usuario.isAdm() +
-					"' WHERE id_pessoa = " + usuario.getId();
+			ps.setString(1, usuario.getLogin());
+			ps.setString(2, usuario.getSenha());
+			ps.setBoolean(3, usuario.isAdm());
+			ps.setInt(4, usuario.getId());
 			
-			stmt.execute(sql);
+			ps.execute();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -38,7 +39,7 @@ public class UsuarioDao extends Dao{
 		conectar();
 		try {
 			
-			String sql = "INSERT INTO usuario (id_pessoa, login, senha, adm) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO usuario (id_pessoa, login, senha, adm) VALUES (?, ?, MD5(?), ?)";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			
 			ps.setInt(1, usuario.getId());
@@ -127,7 +128,7 @@ public class UsuarioDao extends Dao{
 		Usuario usuario = null;
 		try {
 			
-			String sql = "SELECT * FROM usuario WHERE login=? AND senha=?";
+			String sql = "SELECT * FROM usuario WHERE login=? AND senha=MD5(?)";
 			
 			PreparedStatement ps = connection.prepareStatement(sql);
 			
