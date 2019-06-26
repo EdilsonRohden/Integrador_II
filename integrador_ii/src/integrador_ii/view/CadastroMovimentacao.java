@@ -7,8 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.SqlDateModel;
+
 import integrador_ii.models.Cliente;
 import integrador_ii.models.Conta;
+import integrador_ii.models.DateLabelFormatter;
 import integrador_ii.models.Movimento;
 import integrador_ii.services.ClienteService;
 import integrador_ii.services.ContaService;
@@ -20,12 +25,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.List;
+import java.util.Properties;
 import java.awt.event.ActionEvent;
 
 public class CadastroMovimentacao extends JInternalFrame {
 	private static final long serialVersionUID = -8971273233348356712L;
 	private JTextField txrIdCliente;
-	private JTextField txtData;
 	private JTextField txtValor;
 	private DefaultComboBoxModel<String> modelConta = new DefaultComboBoxModel<String>();
 	private DefaultComboBoxModel<String> modelCliente = new DefaultComboBoxModel<String>();
@@ -87,11 +92,16 @@ public class CadastroMovimentacao extends JInternalFrame {
 		comboBoxCliente.setModel(modelCliente);
 		getContentPane().add(comboBoxCliente);
 		
-		txtData = new JTextField();
-		txtData.setBounds(96, 75, 244, 19);
-		getContentPane().add(txtData);
-		txtData.setText("");
-		txtData.setColumns(10);
+		SqlDateModel model = new SqlDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		
+		datePicker.setBounds(96, 75, 244, 24);
+		getContentPane().add(datePicker);
 		
 		txtValor = new JTextField();
 		txtValor.setBounds(96, 106, 124, 19);
@@ -102,7 +112,7 @@ public class CadastroMovimentacao extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Date dataMovimento = txtData.getText().isEmpty() ? null : Date.valueOf(txtData.getText());
+					Date dataMovimento = model.getValue();
 					String descricao = txtDescricao.getText();
 					double valor = Double.parseDouble(txtValor.getText());
 					String nome = modelCliente.getSelectedItem().toString();

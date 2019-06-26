@@ -3,14 +3,19 @@ package integrador_ii.view;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.SqlDateModel;
 
 import integrador_ii.models.Cliente;
+import integrador_ii.models.DateLabelFormatter;
 import integrador_ii.models.PlanoDeConta;
 import integrador_ii.services.ClienteService;
 import integrador_ii.services.PlanoDeContaService;
@@ -24,8 +29,6 @@ import java.awt.event.ActionEvent;
 
 public class MontaRelatorio extends JInternalFrame {
 	private static final long serialVersionUID = -6244116170121045583L;
-	private JTextField txtDataIni;
-	private JTextField txtDataFin;
 	private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 	private PlanoDeContaService planoDeContas = new PlanoDeContaService();
 	private ClienteService clienteService = new ClienteService();
@@ -54,16 +57,27 @@ public class MontaRelatorio extends JInternalFrame {
 		JLabel lblDataIni = new JLabel("Data Ini.:");
 		lblDataIni.setBounds(12, 58, 66, 15);
 		getContentPane().add(lblDataIni);
+	
+		SqlDateModel modelDateIni = new SqlDateModel();
+		SqlDateModel modelDateFin = new SqlDateModel();
 		
-		txtDataIni = new JTextField();
-		txtDataIni.setBounds(113, 56, 124, 19);
-		getContentPane().add(txtDataIni);
-		txtDataIni.setColumns(10);
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
 		
-		txtDataFin = new JTextField();
-		txtDataFin.setBounds(113, 107, 124, 19);
-		getContentPane().add(txtDataFin);
-		txtDataFin.setColumns(10);
+		JDatePanelImpl datePanelIni = new JDatePanelImpl(modelDateIni, p);
+		JDatePanelImpl datePanelFin = new JDatePanelImpl(modelDateFin, p);
+		
+		JDatePickerImpl datePickerIni = new JDatePickerImpl(datePanelIni, new DateLabelFormatter());
+		
+		datePickerIni.setBounds(113, 56, 219, 25);
+		getContentPane().add(datePickerIni);
+
+		JDatePickerImpl datePickerFin = new JDatePickerImpl(datePanelFin, new DateLabelFormatter());
+		
+		datePickerFin.setBounds(113, 107, 219, 25);
+		getContentPane().add(datePickerFin);	
 		
 		JLabel lblDataFin = new JLabel("Data Fin.:");
 		lblDataFin.setBounds(12, 109, 81, 15);
@@ -88,8 +102,8 @@ public class MontaRelatorio extends JInternalFrame {
 					int idCliente = Integer.parseInt(model.getSelectedItem().toString().split("-")[0]);
 					
 					
-					Date dataIni = Date.valueOf(txtDataIni.getText());
-					Date dataFin = Date.valueOf(txtDataFin.getText());
+					Date dataIni = modelDateIni.getValue();
+					Date dataFin = modelDateFin.getValue();
 					
 					ArrayList<PlanoDeConta> dados = planoDeContas.getRelatorio(idCliente, dataIni, dataFin);
 					
