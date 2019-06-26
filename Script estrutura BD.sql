@@ -73,11 +73,4 @@ INSERT INTO cidade ( id_ibge, uf, nome ) VALUES ( 4204202, 'SC', 'Chapecó' );
 
 INSERT INTO pessoa (id_ibge, nome) VALUES ( 4204202, 'ADMIN' );
 
-INSERT INTO usuario ( id_pessoa, login, senha, adm ) VALUES ( 1, 'admin', 'admin', True );
-
-
-
-
-
-
-select * from pessoa
+INSERT INTO usuario ( id_pessoa, login, senha, adm ) VALUES ( 1, 'admin', MD5('admin'), True );
