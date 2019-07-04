@@ -14,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CadastroCidade extends JInternalFrame {
 	private static final long serialVersionUID = 5973703882264062329L;
@@ -35,6 +36,12 @@ public class CadastroCidade extends JInternalFrame {
 	}
 
 	public CadastroCidade() {
+		
+		getContentPane().setBackground(Color.LIGHT_GRAY);
+		setBackground(Color.LIGHT_GRAY);
+		setBorder(null);
+		setResizable(true);
+		
 		setTitle("Cadastro de Cidade");
 		setBounds(100, 100, 280, 177);
 		getContentPane().setLayout(null);

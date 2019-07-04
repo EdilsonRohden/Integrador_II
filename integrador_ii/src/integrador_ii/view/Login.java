@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class Login extends JFrame {
 
@@ -40,14 +41,16 @@ public class Login extends JFrame {
 	}
 
 	public Login() {
+		setBackground(Color.LIGHT_GRAY);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 495, 251);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnLogin = new JButton("login");
+		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginService loginService = new LoginService();
@@ -67,7 +70,7 @@ public class Login extends JFrame {
 		btnLogin.setBounds(23, 178, 114, 25);
 		contentPane.add(btnLogin);
 		
-		JButton btnCancel = new JButton("cancel");
+		JButton btnCancel = new JButton("Cancelar");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -85,7 +88,7 @@ public class Login extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		txtLogin = new JTextField();
-		txtLogin.setBounds(139, 12, 124, 19);
+		txtLogin.setBounds(140, 8, 124, 23);
 		contentPane.add(txtLogin);
 		txtLogin.setColumns(10);
 		
@@ -94,7 +97,7 @@ public class Login extends JFrame {
 		contentPane.add(txtPassword);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(""));
+		label.setIcon(new ImageIcon("/home/edislon/Dropbox/Unoesc3°_Fase/ComponenteIntegrador_II/Integrador_II/integrador_ii/lib/logo.png"));
 		label.setBounds(281, 12, 202, 199);
 		contentPane.add(label);
 	}

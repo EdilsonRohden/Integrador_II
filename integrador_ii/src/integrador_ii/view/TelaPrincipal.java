@@ -1,6 +1,7 @@
 package integrador_ii.view;
 
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
@@ -16,6 +17,8 @@ import javax.swing.JDesktopPane;
 import javax.swing.JLayeredPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Dimension;
 
 public class TelaPrincipal extends JFrame {
 
@@ -37,11 +40,16 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	public TelaPrincipal(Usuario usuario) {
+		setBackground(Color.LIGHT_GRAY);
 		TelaPrincipal.usuario = usuario;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 845, 438);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		setBounds(100, 100, (int) screenSize.getWidth(),(int) screenSize.getHeight());
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(Color.LIGHT_GRAY);
 		setJMenuBar(menuBar);
 		
 		JMenu mnCadastros = new JMenu("Cadastros");
@@ -171,6 +179,7 @@ public class TelaPrincipal extends JFrame {
 		});
 		mnLogoff.add(mntmSair);
 		contentPane = new JDesktopPane();
+		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
