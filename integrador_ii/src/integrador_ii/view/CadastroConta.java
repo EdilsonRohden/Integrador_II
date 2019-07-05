@@ -83,13 +83,14 @@ public class CadastroConta extends JInternalFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				try {
-					
-					int id = Integer.parseInt(txtId.getText());
-					Conta conta = contaService.getContaById(id);
-					
-					txtDescricaoS.setText(conta.getDescricaoS());
-					txtIdS.setText(Integer.toString(conta.getIdS()));
-					model.setSelectedItem(conta.getIdP()+"-"+conta.getDescricaoP());
+					if(!txtId.getText().isEmpty()) {
+						int id = Integer.parseInt(txtId.getText());
+						Conta conta = contaService.getContaById(id);
+						
+						txtDescricaoS.setText(conta.getDescricaoS());
+						txtIdS.setText(Integer.toString(conta.getIdS()));
+						model.setSelectedItem(conta.getIdP()+"-"+conta.getDescricaoP());						
+					}
 					
 				}catch(Exception exeption) {}
 			}

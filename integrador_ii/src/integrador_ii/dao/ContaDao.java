@@ -92,7 +92,6 @@ public class ContaDao extends Dao{
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}finally {
 			desconectar();
 		}
