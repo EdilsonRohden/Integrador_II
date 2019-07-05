@@ -1,0 +1,11 @@
+Windows 10 (hospedeiro) - 
+Windows 7  (Virtualizado) -
+	* Roda sobre arquitetura Hibrida (RISC e SISC).
+	* Implementa Interupções e Exceções.
+	* MonoUsuario.
+	* Multiprocessado.
+	* preemptivo.
+	* Escalonamento Circular com Prioridade.
+	* Classifica-se como um SO de rede.
+	* Implementa Memória virtual.
+	* Implementa o sistema de arquivos NTFS e da suporte a seus antecessores.
