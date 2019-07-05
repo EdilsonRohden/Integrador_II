@@ -77,16 +77,18 @@ public class ContaDao extends Dao{
 		try {
 			
 			Statement stmt = connection.createStatement();
-			String sql = "SELECT * FROM conta JOIN primeiro_nivel ON conta.id_primeiro_nivel = primeiro_nivel.id WHERE id_conta = " + conta.getId();
+			String sql = "SELECT id_conta, id, id_segundo_nivel, primeiro_nivel.descricao as p_desc, conta.descricao "
+					+ "FROM conta JOIN primeiro_nivel ON conta.id_primeiro_nivel = primeiro_nivel.id WHERE id_conta = " + conta.getId();
 			
 			ResultSet result = stmt.executeQuery(sql);
 			
 			if(result != null) {
-				resultado.setId(result.getInt("conta.id_conta"));
-				resultado.setIdP(result.getInt("primeiro_nivel.id"));
-				resultado.setIdS(result.getInt("conta.id_segundo_nivel"));
-				resultado.setDescricaoP(result.getString("primeiro_nivel.descricao"));
-				resultado.setDescricaoS(result.getString("conta.descricao"));
+				result.next();
+				resultado.setId(result.getInt("id_conta"));
+				resultado.setIdP(result.getInt("id"));
+				resultado.setIdS(result.getInt("id_segundo_nivel"));
+				resultado.setDescricaoP(result.getString("p_desc"));
+				resultado.setDescricaoS(result.getString("descricao"));
 			}
 			
 		} catch (SQLException e) {

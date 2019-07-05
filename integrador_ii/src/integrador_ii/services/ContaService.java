@@ -33,4 +33,10 @@ public class ContaService {
 		return contaDao.getContas();
 	}
 
+	public Conta getContaById(int id) {
+		Conta conta = contaDao.getContaById(new Conta(id));
+		return conta;
+		
+	}
+
 }

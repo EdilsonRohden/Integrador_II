@@ -17,6 +17,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CadastroConta extends JInternalFrame {
 	private static final long serialVersionUID = 3426010029033819751L;
@@ -77,6 +79,21 @@ public class CadastroConta extends JInternalFrame {
 		getContentPane().add(lblIdentificador);
 		
 		txtId = new JTextField();
+		txtId.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				try {
+					
+					int id = Integer.parseInt(txtId.getText());
+					Conta conta = contaService.getContaById(id);
+					
+					txtDescricaoS.setText(conta.getDescricaoS());
+					txtIdS.setText(Integer.toString(conta.getIdS()));
+					model.setSelectedItem(conta.getIdP()+"-"+conta.getDescricaoP());
+					
+				}catch(Exception exeption) {}
+			}
+		});
 		txtId.setBounds(136, 10, 64, 19);
 		getContentPane().add(txtId);
 		txtId.setColumns(10);

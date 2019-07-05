@@ -18,7 +18,6 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
@@ -62,6 +61,7 @@ public class CadastroUsuario extends JInternalFrame {
 		
 		JButton btnNewButton = new JButton("Salvar");
 		btnNewButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 				
 				Integer id = Integer.parseInt(txtIdPessoa.getText());
