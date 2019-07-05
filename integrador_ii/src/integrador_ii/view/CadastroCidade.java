@@ -37,9 +37,8 @@ public class CadastroCidade extends JInternalFrame {
 
 	public CadastroCidade() {
 		
-		getContentPane().setBackground(Color.LIGHT_GRAY);
-		setBackground(Color.LIGHT_GRAY);
-		setBorder(null);
+		getContentPane().setBackground(Color.WHITE);
+		setBackground(Color.WHITE);
 		setResizable(true);
 		
 		setTitle("Cadastro de Cidade");
