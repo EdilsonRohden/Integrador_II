@@ -89,7 +89,7 @@ public class CadastroConta extends JInternalFrame {
 				String idS = txtIdS.getText();
 				String descricaoS = txtDescricaoS.getText();
 				
-				if(id.isEmpty() || idP.isEmpty() || idS.isEmpty() || descricaoS.isEmpty()) {
+				if(idP.isEmpty() || idS.isEmpty() || descricaoS.isEmpty()) {
 					JOptionPane.showMessageDialog(getContentPane(), "Dados invalidos!");
 				}else {					
 					contaService.salvar(id, idP, idS, descricaoS);
@@ -107,7 +107,7 @@ public class CadastroConta extends JInternalFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(198, 219, 114, 25);
+		btnCancelar.setBounds(283, 219, 114, 25);
 		getContentPane().add(btnCancelar);
 
 	}
